@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>PowerPlatform · Публичный просмотр процесса</title>
-  <link rel="stylesheet" href="./node-editor.css?v=33">
+  <link rel="stylesheet" href="./node-editor.css?v=34">
 </head>
 <body data-theme="day" data-published="true">
   <header class="topbar">
@@ -50,8 +50,6 @@
         <button class="source-tab" data-source="cadlib" role="tab">CADLib</button>
         <button class="source-tab ontology-tab" data-source="ontology" role="tab">Онтология</button>
       </div>
-      <div id="library-scope" class="workspace-scope" aria-live="polite"></div>
-
       <section id="process-library" class="source-pane active">
         <label class="search-box"><span>⌕</span><input id="node-search" placeholder="Найти нод…" autocomplete="off"></label>
         <div class="library-caption"><span>Ноды платформы</span><b id="node-total">…</b></div>
@@ -118,7 +116,7 @@
 
     <aside id="inspector" class="inspector-panel">
       <div class="panel-title inspector-title">
-        <div><small>ПРАВАЯ ПАНЕЛЬ</small><strong id="inspector-panel-title">Выбранный нод</strong></div>
+        <div><small>ВЫБРАННЫЙ ЭЛЕМЕНТ</small><strong id="inspector-panel-title" aria-live="polite">Рабочая модель</strong></div>
         <button id="close-inspector" class="quiet-icon" title="Закрыть">×</button>
       </div>
       <div class="inspector-tabs" role="tablist">
@@ -236,6 +234,6 @@
   </dialog>
 
   <script src="./published-bootstrap.js?v=1"></script>
-  <script src="./node-editor.js?v=38"></script>
+  <script src="./node-editor.js?v=39"></script>
 </body>
 </html>
