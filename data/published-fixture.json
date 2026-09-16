@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "publishedAt": "2026-09-16T12:41:48+00:00",
+  "publishedAt": "2026-09-16T14:40:03+00:00",
   "defaultModelId": "public-process",
   "defaultOntologyId": "public-ontology",
   "project": {
@@ -3859,7 +3859,7 @@
         {
           "cardinality": "one2many",
           "description": "Project -> корневые узлы structure_data.",
-          "from": "Project",
+          "from": "Project1",
           "fromAlias": "containsStructureNodes",
           "modified": null,
           "name": "ContainsProjectStructure",
@@ -4015,7 +4015,7 @@
           "events": null,
           "extendable": true,
           "modified": null,
-          "name": "Project",
+          "name": "Project1",
           "noHistory": false,
           "systemName": null,
           "viewConfig": null

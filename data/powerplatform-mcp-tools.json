@@ -3,7 +3,7 @@
   "server": "PowerPlatform Local Workspace",
   "transport": "stdio",
   "displayRevision": "stdio · schema v1",
-  "toolCount": 51,
+  "toolCount": 52,
   "safety": {
     "default": "read-only or local staging",
     "remoteMutation": "execute=false by default; exact confirmation required",
@@ -1000,6 +1000,83 @@
         {
           "name": "readBack",
           "description": "Контрольное чтение модели."
+        }
+      ]
+    },
+    {
+      "name": "pas_create_model_with_schema",
+      "title": "Создать процесс со схемой",
+      "purpose": "За один подтверждённый вызов создать новую модель, проверить и записать полную схему; процесс не запускается.",
+      "group": "Студия процессов",
+      "mode": "write",
+      "access": "remote-write",
+      "accessLabel": "ЗАПИСЬ",
+      "confirmation": "CREATE PROCESS <project_id>",
+      "inputs": [
+        {
+          "name": "project_id",
+          "type": "string",
+          "required": true,
+          "description": "ID проекта Студии процессов."
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": true,
+          "description": "Отображаемое название создаваемого или изменяемого объекта."
+        },
+        {
+          "name": "schema",
+          "type": "array<object>",
+          "required": true,
+          "description": "Inline-массив нодов и связей схемы PAS."
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "required": false,
+          "description": "Описание объекта.",
+          "default": ""
+        },
+        {
+          "name": "execute",
+          "type": "boolean",
+          "required": false,
+          "description": "При false возвращается безопасный план без изменения платформы.",
+          "default": false
+        },
+        {
+          "name": "confirmation",
+          "type": "string",
+          "required": false,
+          "description": "Точная фраза подтверждения, полученная на этапе PLAN.",
+          "default": ""
+        }
+      ],
+      "outputs": [
+        {
+          "name": "status",
+          "description": "PLAN, REJECTED, ALREADY_EXISTS, PARTIAL, EXECUTED или EXECUTED_READBACK_MISMATCH."
+        },
+        {
+          "name": "executed",
+          "description": "Была ли создана модель."
+        },
+        {
+          "name": "modelId",
+          "description": "ID созданной модели."
+        },
+        {
+          "name": "validation",
+          "description": "Проверка полной схемы до записи."
+        },
+        {
+          "name": "schemaWrite",
+          "description": "Результат записи схемы."
+        },
+        {
+          "name": "readBack",
+          "description": "Контрольное чтение модели и схемы."
         }
       ]
     },
