@@ -527,12 +527,12 @@
     {
       "name": "ontology_sync",
       "title": "Синхронизировать онтологию",
-      "purpose": "Синхронизировать отредактированный YModel с онтологией; сначала план, затем backup и read-back.",
+      "purpose": "Проверить зависимости PAS, записать YModel, выполнить read-back и автоматически развернуть онтологию.",
       "group": "Фабрика онтологий",
       "mode": "write",
       "access": "remote-write",
       "accessLabel": "ЗАПИСЬ",
-      "confirmation": "UPDATE <ontology_id>",
+      "confirmation": "SYNC AND DEPLOY <ontology_id>",
       "inputs": [
         {
           "name": "ontology_id",
@@ -564,7 +564,7 @@
       "outputs": [
         {
           "name": "status",
-          "description": "PLAN, EXECUTED или EXECUTED_READBACK_MISMATCH."
+          "description": "PLAN, EXECUTED, EXECUTED_READBACK_MISMATCH или UPDATED_DEPLOY_FAILED."
         },
         {
           "name": "executed",
@@ -572,11 +572,15 @@
         },
         {
           "name": "confirmationRequired",
-          "description": "Точная фраза подтверждения."
+          "description": "Точная фраза подтверждения синхронизации и deploy."
         },
         {
           "name": "diff",
           "description": "Семантические изменения типов и связей."
+        },
+        {
+          "name": "impact",
+          "description": "Зависимые процессы PAS и полнота проверки имён."
         },
         {
           "name": "staged",
@@ -589,6 +593,10 @@
         {
           "name": "verification",
           "description": "Результат независимого чтения после записи."
+        },
+        {
+          "name": "deployment",
+          "description": "Результат обязательного автоматического развёртывания."
         }
       ]
     },

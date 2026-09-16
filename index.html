@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>PowerPlatform · Публичный просмотр процесса</title>
-  <link rel="stylesheet" href="./node-editor.css?v=37">
+  <link rel="stylesheet" href="./node-editor.css?v=38">
 </head>
 <body data-theme="day" data-published="true">
   <header class="topbar">
@@ -121,7 +121,7 @@
       </div>
       <div class="inspector-tabs" role="tablist">
         <button class="active" type="button" data-inspector-view="properties" role="tab">Свойства</button>
-        <button type="button" data-inspector-view="codex" role="tab">Codex <i id="codex-tab-status"></i></button>
+        <button type="button" data-inspector-view="codex" role="tab">AI <i id="codex-tab-status"></i></button>
       </div>
       <section id="inspector-properties" class="inspector-view active">
         <div id="inspector-empty" class="inspector-empty"><span>◇</span><strong>Ничего не выбрано</strong><p>Нажмите на нод или связь, чтобы увидеть источник и настройки.</p></div>
@@ -142,7 +142,7 @@
     <button type="button" data-phone-panel="library"><span>＋</span><b>Ноды</b></button>
     <button type="button" data-phone-panel="canvas"><span>◇</span><b>Поле</b></button>
     <button type="button" data-phone-panel="properties"><span>☷</span><b>Свойства</b></button>
-    <button type="button" data-phone-panel="codex"><span>✦</span><b>Codex</b></button>
+    <button type="button" data-phone-panel="codex"><span>✦</span><b>AI</b></button>
     <button type="button" data-phone-action="zoom-out"><span>−</span><b>Масштаб</b></button>
     <button type="button" data-phone-action="zoom-in"><span>＋</span><b>Масштаб</b></button>
   </nav>
@@ -226,13 +226,13 @@
 
   <dialog id="ontology-sync-dialog" class="ontology-sync-dialog">
     <form method="dialog" class="dialog-head"><div><small>СИНХРОНИЗАЦИЯ ОНТОЛОГИИ</small><h2 id="ontology-sync-title">Проверка изменений</h2></div><button value="cancel">×</button></form>
-    <p class="dialog-copy">Сначала создан локальный план. Запись на PowerPlatform произойдёт только после точного подтверждения ниже; перед записью сервер сохранит резервную копию и затем повторно прочитает онтологию.</p>
+    <p class="dialog-copy">План проверяет изменяемые имена во всех доступных схемах PAS. После точного подтверждения сервер сохранит резервную копию, запишет DTO, выполнит контрольное чтение и автоматически развернёт онтологию.</p>
     <pre id="ontology-sync-summary" class="ontology-sync-summary"></pre>
     <label class="dialog-field"><span>Точное подтверждение</span><input id="ontology-sync-confirmation" autocomplete="off" spellcheck="false"></label>
-    <div class="dialog-actions"><button id="ontology-sync-execute" type="button" class="run-button">Подтвердить синхронизацию</button><button type="button" onclick="document.getElementById('ontology-sync-dialog').close()">Отмена</button></div>
+    <div class="dialog-actions"><button id="ontology-sync-execute" type="button" class="run-button">Синхронизировать и развернуть</button><button type="button" onclick="document.getElementById('ontology-sync-dialog').close()">Отмена</button></div>
   </dialog>
 
   <script src="./published-bootstrap.js?v=1"></script>
-  <script src="./node-editor.js?v=42"></script>
+  <script src="./node-editor.js?v=45"></script>
 </body>
 </html>
