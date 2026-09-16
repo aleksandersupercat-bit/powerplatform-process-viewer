@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PowerPlatform · Публичный просмотр процесса</title>
+  <link rel="stylesheet" href="./node-editor.css?v=30">
+</head>
+<body data-theme="day" data-published="true">
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="Главная">
+      <span class="brand-mark"><i></i><i></i><i></i><i></i></span>
+      <span><strong>PowerPlatform</strong><small>КОНСТРУКТОР ПРОЦЕССОВ</small></span>
+    </a>
+    <span class="top-separator"></span>
+    <input id="graph-name" class="graph-name" value="Новый процесс" aria-label="Название процесса">
+    <span id="save-state" class="save-state">Локальный черновик</span>
+    <nav class="top-actions">
+      <button id="open-models" class="tool-button" title="Открыть готовую схему"><span>▱</span> Схемы</button>
+      <button id="save-graph" class="tool-button" title="Сохранить рабочее поле"><span>⌑</span> Сохранить</button>
+      <button id="deployment-check" class="tool-button deployment-check" title="Проверить готовность схемы к публикации"><i></i><span>Публикация</span><b id="deployment-count">0</b></button>
+      <button id="toggle-theme" class="tool-button icon-only" title="День / ночь">☾</button>
+      <button id="toggle-phone-mode" class="tool-button" type="button" title="Управление через Windows App с телефона" aria-pressed="false"><span>▯</span> Телефон</button>
+      <button id="debug-graph" class="tool-button"><span>◇</span> Отладка</button>
+      <button id="open-help" class="tool-button icon-only top-help-button" type="button" title="Справочник MCP PowerPlatform" aria-label="Открыть справочник MCP PowerPlatform">?</button>
+      <button id="run-graph" class="run-button"><span>▶</span> Запустить</button>
+    </nav>
+    <div class="phone-head-actions" aria-label="Основные действия на телефоне">
+      <button id="phone-run-graph" class="run-button phone-run-button" type="button"><span>▶</span><b>Пуск</b></button>
+      <button id="phone-top-menu-toggle" class="tool-button phone-menu-button" type="button" title="Другие команды" aria-label="Другие команды" aria-expanded="false">⋮</button>
+    </div>
+    <nav id="phone-top-menu" class="phone-top-menu" aria-label="Другие команды" hidden>
+      <button type="button" data-phone-top-action="models"><span>▱</span> Схемы</button>
+      <button type="button" data-phone-top-action="save"><span>⌑</span> Сохранить</button>
+      <button type="button" data-phone-top-action="deployment"><span>●</span> Публикация</button>
+      <button type="button" data-phone-top-action="debug"><span>◇</span> Отладка</button>
+      <button type="button" data-phone-top-action="help"><span>?</span> Справочник</button>
+      <button type="button" data-phone-top-action="theme"><span>◐</span> Тема</button>
+      <button type="button" data-phone-top-action="desktop" class="phone-desktop-action"><span>▣</span> Обычный вид</button>
+    </nav>
+  </header>
+
+  <main class="editor-shell">
+    <aside id="library" class="library-panel">
+      <div class="panel-title">
+        <div><small>БИБЛИОТЕКА</small><strong>Добавить на поле</strong></div>
+        <button id="close-library" class="quiet-icon" title="Свернуть">‹</button>
+      </div>
+      <div class="source-tabs" role="tablist">
+        <button class="source-tab active" data-source="process" role="tab">Ноды</button>
+        <button class="source-tab" data-source="cadlib" role="tab">CADLib</button>
+        <button class="source-tab ontology-tab" data-source="ontology" role="tab">Онтология</button>
+      </div>
+
+      <section id="process-library" class="source-pane active">
+        <label class="search-box"><span>⌕</span><input id="node-search" placeholder="Найти нод…" autocomplete="off"></label>
+        <div class="library-caption"><span>Ноды платформы</span><b id="node-total">…</b></div>
+        <div id="node-list" class="catalog-list"><div class="loading-row">Загружаю библиотеку…</div></div>
+        <div class="pager"><button id="nodes-prev">Назад</button><span id="nodes-page">1 / 1</span><button id="nodes-next">Далее</button></div>
+        <div class="library-tip"><span>＋</span><p>Нажмите на нод или перетащите его на рабочее поле. Порты появятся сразу.</p></div>
+      </section>
+
+      <section id="cadlib-library" class="source-pane">
+        <label class="search-box"><span>⌕</span><input id="cadlib-search" placeholder="Категория или класс…" autocomplete="off"></label>
+        <div class="cadlib-source-line project-source"><span class="source-dot"></span><div><strong>CADLib · PipeDB_Model1 <em>НАШЕ</em></strong><small id="cadlib-stats">Загрузка структуры…</small></div></div>
+        <label class="zero-toggle"><input id="show-zero" type="checkbox"><span></span> Показать нулевые категории</label>
+        <div id="cadlib-tree" class="cadlib-tree"><div class="loading-row">Читаю классы CADLib…</div></div>
+        <a class="full-map-link" href="#" target="_blank">Открыть полную карту CADLib ↗</a>
+      </section>
+
+      <section id="ontology-library" class="source-pane ontology-pane">
+        <label class="search-box ontology-search"><span>⌕</span><input id="ontology-search" placeholder="Онтология, тип или атрибут…" autocomplete="off"></label>
+        <div class="ontology-source-line"><span class="ontology-source-icon">◈</span><div><strong>Фабрика онтологий</strong><small id="ontology-summary">Данные напрямую из PowerPlatform</small></div></div>
+        <div class="library-caption"><span>Онтологии и структура</span><b id="ontology-total">…</b></div>
+        <div id="ontology-list" class="catalog-list ontology-list"><div class="loading-row">Загружаю онтологии…</div></div>
+        <div class="library-tip ontology-tip"><span>◈</span><p>Раскройте онтологию, чтобы увидеть её типы, атрибуты и связи.</p></div>
+      </section>
+    </aside>
+
+    <button id="show-library" class="edge-handle left" title="Показать библиотеку">＋</button>
+
+    <section id="viewport" class="viewport" aria-label="Рабочее поле нодового конструктора">
+      <div class="canvas-toolbar">
+        <div class="layer-switch">
+          <button class="layer-button active" data-layer="all"><i></i> Всё</button>
+          <button class="layer-button" data-layer="process"><i></i> Процесс</button>
+          <button class="layer-button" data-layer="cadlib"><i></i> CADLib</button>
+          <button class="layer-button ontology-layer" data-layer="ontology"><i></i> Онтология</button>
+        </div>
+        <span class="toolbar-separator"></span>
+        <button id="undo" title="Отменить">↶</button>
+        <button id="clear-graph" title="Очистить поле">⌫</button>
+        <span class="toolbar-separator"></span>
+        <button id="zoom-out" title="Уменьшить">−</button>
+        <span id="zoom-label">100%</span>
+        <button id="zoom-in" title="Увеличить">＋</button>
+        <button id="fit-graph" title="Скрыть неиспользуемые входы и выходы">Вписать</button>
+        <button id="auto-layout" title="Показать все входы и выходы и разложить ноды">Разложить</button>
+        <button id="refresh-platform" title="Повторно прочитать каталоги и состояние PowerPlatform">↻ Данные</button>
+        <button id="sync-ontology" class="sync-ontology" type="button" hidden><span>↻</span> Синхронизировать</button>
+      </div>
+      <div id="empty-canvas" class="empty-canvas">
+        <div class="empty-symbol"><i></i><i></i><i></i></div>
+        <strong>Рабочее поле готово</strong>
+        <p>Добавьте нод платформы или класс из CADLib. Соединяйте порты перетаскиванием.</p>
+        <div><button data-quick="process">＋ Добавить нод</button><button data-quick="cadlib">＋ Открыть CADLib</button></div>
+      </div>
+      <div id="stage" class="stage">
+        <div id="workspace-frames" class="workspace-frames"></div>
+        <svg id="wires" class="wires" width="5000" height="3200" aria-hidden="true">
+          <g id="wire-layer"></g>
+          <path id="wire-preview" class="wire preview" d="" hidden></path>
+        </svg>
+        <div id="nodes" class="nodes"></div>
+      </div>
+      <div id="selection-box" class="selection-box" hidden></div>
+      <div class="canvas-help"><span>ЛКМ по фону — выделение рамкой</span><span>Delete — удалить выбранное</span><span>Колесо — масштаб</span><span>Средняя кнопка — перемещение</span><span>Провод — потянуть от порта</span><span>Двойной клик по группе — открыть</span></div>
+      <div id="minimap" class="minimap"><div id="minimap-nodes"></div><div id="minimap-view"></div></div>
+    </section>
+
+    <aside id="inspector" class="inspector-panel">
+      <div class="panel-title inspector-title">
+        <div><small>ПРАВАЯ ПАНЕЛЬ</small><strong id="inspector-panel-title">Выбранный нод</strong></div>
+        <button id="close-inspector" class="quiet-icon" title="Закрыть">×</button>
+      </div>
+      <div class="inspector-tabs" role="tablist">
+        <button class="active" type="button" data-inspector-view="properties" role="tab">Свойства</button>
+        <button type="button" data-inspector-view="codex" role="tab">Codex <i id="codex-tab-status"></i></button>
+      </div>
+      <section id="inspector-properties" class="inspector-view active">
+        <div id="inspector-empty" class="inspector-empty"><span>◇</span><strong>Ничего не выбрано</strong><p>Нажмите на нод или связь, чтобы увидеть источник и настройки.</p></div>
+        <div id="inspector-content" class="inspector-content" hidden></div>
+      </section>
+      <section id="codex-panel" class="inspector-view codex-panel" hidden>
+        <div class="codex-connect-row"><span id="codex-status"><i></i> Не подключён</span><button id="codex-connect" type="button">Подключить</button></div>
+        <p class="codex-scope">Codex работает в этом проекте и видит только проектный MCP <code>powerplatform_local</code>. Изменения схемы сначала показываются как план и применяются только локально.</p>
+        <div id="codex-login" class="codex-login" hidden></div>
+        <div id="codex-messages" class="codex-messages"><article class="codex-message assistant">Можно спросить о схеме или написать, что изменить, и нажать «На схему».</article></div>
+        <form id="codex-form" class="codex-form"><textarea id="codex-input" rows="3" placeholder="Например: добавь AI-Помощник и соедини с выводом в консоль" disabled></textarea><div><button id="codex-new-thread" type="button" title="Начать новый чат" disabled>Новый чат</button><button id="codex-plan" class="codex-plan-button" type="button" title="Подготовить безопасный план изменений" disabled>На схему</button><button id="codex-send" class="run-button" type="submit" disabled>Отправить</button></div></form>
+      </section>
+    </aside>
+    <button id="show-inspector" class="edge-handle right" title="Показать свойства">‹</button>
+    <button id="phone-panel-shade" class="phone-panel-shade" type="button" aria-label="Закрыть боковую панель"></button>
+  </main>
+
+  <nav id="phone-dock" class="phone-dock" aria-label="Управление схемой с телефона">
+    <button type="button" data-phone-panel="library"><span>＋</span><b>Ноды</b></button>
+    <button type="button" data-phone-panel="canvas"><span>◇</span><b>Поле</b></button>
+    <button type="button" data-phone-panel="properties"><span>☷</span><b>Свойства</b></button>
+    <button type="button" data-phone-panel="codex"><span>✦</span><b>Codex</b></button>
+    <button type="button" data-phone-action="zoom-out"><span>−</span><b>Масштаб</b></button>
+    <button type="button" data-phone-action="zoom-in"><span>＋</span><b>Масштаб</b></button>
+  </nav>
+
+  <div id="statusbar" class="statusbar">
+    <span id="connection-status"><i></i> Проверяю платформу…</span>
+    <span id="graph-stats">0 нодов · 0 связей</span>
+    <span id="interaction-hint">Готово к работе</span>
+  </div>
+  <div id="toast" class="toast" role="status"></div>
+
+  <dialog id="models-dialog">
+    <form method="dialog" class="dialog-head"><div><small>ПЛАТФОРМА</small><h2>Готовые схемы</h2></div><button value="cancel">×</button></form>
+    <label class="dialog-field"><span>Проект</span><select id="project-select"><option>Загрузка…</option></select></label>
+    <label class="search-box dialog-search"><span>⌕</span><input id="model-search" placeholder="Найти схему…"></label>
+    <div id="model-list" class="model-list"><div class="loading-row">Загружаю проекты…</div></div>
+  </dialog>
+
+  <dialog id="run-dialog">
+    <form method="dialog" class="dialog-head"><div><small>ЗАПУСК</small><h2 id="run-title">Подготовка процесса</h2></div><button value="cancel">×</button></form>
+    <div class="run-summary"><span>Ноды<strong id="run-nodes">0</strong></span><span>Связи<strong id="run-edges">0</strong></span><span>Режим<strong id="run-mode">План</strong></span></div>
+    <div id="run-target" class="run-target" hidden></div>
+    <p id="run-copy" class="dialog-copy">Локальная схема будет проверена. Реальный запуск готовой схемы платформы потребует точного подтверждения через MCP.</p>
+    <div id="run-parameters" class="run-parameters"><div class="loading-row">Читаю параметры запуска с платформы…</div></div>
+    <pre id="run-result" hidden></pre>
+    <div class="dialog-actions"><button id="validate-run" type="button">Проверить</button><button id="execute-run" type="button" class="run-button">Запустить</button><button type="button" onclick="document.getElementById('run-dialog').close()">Закрыть</button></div>
+  </dialog>
+
+  <dialog id="node-definition-dialog" class="definition-dialog">
+    <form method="dialog" class="dialog-head"><div><small id="definition-kind">НОД ПЛАТФОРМЫ</small><h2 id="definition-title">Реализация ноды</h2></div><button value="cancel">×</button></form>
+    <p id="definition-copy" class="dialog-copy"></p>
+    <pre id="definition-content" class="definition-content"></pre>
+    <div class="dialog-actions"><button type="button" onclick="document.getElementById('node-definition-dialog').close()">Закрыть</button></div>
+  </dialog>
+
+  <dialog id="group-dialog" class="group-dialog" aria-labelledby="group-title">
+    <div class="group-dialog-shell">
+      <header class="group-dialog-head">
+        <div><small>СОДЕРЖИМОЕ ГРУППЫ</small><h2 id="group-title">Группа</h2><p id="group-subtitle"></p></div>
+        <button id="close-group" type="button" class="group-close" aria-label="Закрыть группу" title="Закрыть и вернуться к основной схеме">✓</button>
+      </header>
+      <div id="group-canvas" class="group-canvas">
+        <div id="group-stage" class="group-stage">
+          <svg id="group-wires" class="group-wires" aria-hidden="true"><g id="group-wire-layer"></g><path id="group-wire-preview" class="wire preview" d="" hidden></path></svg>
+          <div id="group-nodes" class="group-nodes"></div>
+        </div>
+      </div>
+      <footer class="group-dialog-foot"><span>ЛКМ — выбрать · заголовок — переместить · порты — связать · колесо — масштаб · средняя кнопка — панорама</span><b id="group-fit-label">100%</b></footer>
+    </div>
+  </dialog>
+
+  <dialog id="mcp-help-dialog" class="group-dialog mcp-help-dialog" aria-labelledby="mcp-help-title">
+    <div class="group-dialog-shell mcp-help-shell">
+      <header class="group-dialog-head">
+        <div><small>СПРАВОЧНИК MCP</small><h2 id="mcp-help-title">PowerPlatform · Local Workspace</h2><p id="mcp-help-subtitle">Загружаю зарегистрированные инструменты…</p></div>
+        <button id="close-help" type="button" class="group-close" aria-label="Закрыть справочник" title="Закрыть и вернуться к схеме">✓</button>
+      </header>
+      <div class="mcp-help-body">
+        <div class="mcp-help-toolbar">
+          <label class="search-box"><span>⌕</span><input id="mcp-help-search" placeholder="Инструмент, вход или выход…" autocomplete="off"></label>
+          <div class="mcp-help-filters" role="group" aria-label="Режим инструмента">
+            <button type="button" class="active" data-mcp-mode="all">Все</button>
+            <button type="button" data-mcp-mode="read">Чтение</button>
+            <button type="button" data-mcp-mode="write">Запись</button>
+          </div>
+        </div>
+        <div id="mcp-help-list" class="mcp-help-list"><div class="loading-row">Читаю реестр MCP…</div></div>
+      </div>
+      <footer class="group-dialog-foot"><span>Нажмите раздел, затем плашку инструмента — появятся его входы и выходы.</span><b id="mcp-help-revision">MCP</b></footer>
+    </div>
+  </dialog>
+
+  <dialog id="deployment-dialog" class="deployment-dialog">
+    <form method="dialog" class="dialog-head"><div><small>КОНТРОЛЬ ДЕПЛОЯ</small><h2>Готовность к публикации</h2></div><button value="cancel">×</button></form>
+    <p class="dialog-copy deployment-copy">Предварительная проверка показывает происхождение нод и локальные зависимости. Окончательный результат подтверждается только публикацией и проверкой платформы.</p>
+    <div id="deployment-summary" class="deployment-summary"></div>
+    <div id="deployment-list" class="deployment-list"></div>
+    <div class="deployment-legend"><span><i class="platform"></i> Платформа — уже доступно</span><span><i class="project"></i> Наше — требуется добавить при деплое</span></div>
+    <div class="dialog-actions"><button type="button" onclick="document.getElementById('deployment-dialog').close()">Закрыть</button></div>
+  </dialog>
+
+  <dialog id="ontology-sync-dialog" class="ontology-sync-dialog">
+    <form method="dialog" class="dialog-head"><div><small>СИНХРОНИЗАЦИЯ ОНТОЛОГИИ</small><h2 id="ontology-sync-title">Проверка изменений</h2></div><button value="cancel">×</button></form>
+    <p class="dialog-copy">Сначала создан локальный план. Запись на PowerPlatform произойдёт только после точного подтверждения ниже; перед записью сервер сохранит резервную копию и затем повторно прочитает онтологию.</p>
+    <pre id="ontology-sync-summary" class="ontology-sync-summary"></pre>
+    <label class="dialog-field"><span>Точное подтверждение</span><input id="ontology-sync-confirmation" autocomplete="off" spellcheck="false"></label>
+    <div class="dialog-actions"><button id="ontology-sync-execute" type="button" class="run-button">Подтвердить синхронизацию</button><button type="button" onclick="document.getElementById('ontology-sync-dialog').close()">Отмена</button></div>
+  </dialog>
+
+  <script src="./published-bootstrap.js?v=1"></script>
+  <script src="./node-editor.js?v=35"></script>
+</body>
+</html>

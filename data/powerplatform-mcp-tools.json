@@ -1,0 +1,1533 @@
+{
+  "schemaVersion": 1,
+  "server": "PowerPlatform Local Workspace",
+  "transport": "stdio",
+  "displayRevision": "stdio · schema v1",
+  "toolCount": 39,
+  "safety": {
+    "default": "read-only or local staging",
+    "remoteMutation": "execute=false by default; exact confirmation required",
+    "notExposed": [
+      "ontology undeploy",
+      "ontology delete",
+      "PAS delete"
+    ]
+  },
+  "tools": [
+    {
+      "name": "platform_status",
+      "title": "Состояние платформы",
+      "purpose": "Проверить авторизацию и доступность PAS, DOF и трекера без изменений.",
+      "group": "Платформа",
+      "mode": "read",
+      "access": "read",
+      "accessLabel": "ЧТЕНИЕ",
+      "confirmation": null,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "status",
+          "description": "LIVE или DEGRADED."
+        },
+        {
+          "name": "baseUrl",
+          "description": "Адрес PowerPlatform."
+        },
+        {
+          "name": "workspace",
+          "description": "Путь локального workspace."
+        },
+        {
+          "name": "checks",
+          "description": "Доступность PAS, DOF, трекера и текущего пользователя."
+        }
+      ]
+    },
+    {
+      "name": "workspace_list",
+      "title": "Файлы workspace",
+      "purpose": "Показать локальные схемы, экспорты, ноды и результаты общего workspace.",
+      "group": "Локальный workspace",
+      "mode": "read",
+      "access": "read",
+      "accessLabel": "ЧТЕНИЕ",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "kind",
+          "type": "string",
+          "required": false,
+          "description": "Тип локального объекта: ontology, process или node.",
+          "default": null
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "required": false,
+          "description": "Максимальное количество возвращаемых элементов.",
+          "default": 200
+        }
+      ],
+      "outputs": [
+        {
+          "name": "artifacts",
+          "description": "Список локальных схем, экспортов, нодов и результатов."
+        }
+      ]
+    },
+    {
+      "name": "workspace_stage",
+      "title": "Поместить JSON в workspace",
+      "purpose": "Сохранить JSON в workspace; kind: ontology, process или node.",
+      "group": "Локальный workspace",
+      "mode": "write",
+      "access": "local-write",
+      "accessLabel": "ЛОКАЛЬНО",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "kind",
+          "type": "string",
+          "required": true,
+          "description": "Тип локального объекта: ontology, process или node."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "description": "Техническое имя локального объекта или нода."
+        },
+        {
+          "name": "content",
+          "type": "string",
+          "required": true,
+          "description": "JSON-содержимое для сохранения в workspace."
+        }
+      ],
+      "outputs": [
+        {
+          "name": "artifact",
+          "description": "Карточка сохранённого JSON-файла в workspace."
+        }
+      ]
+    },
+    {
+      "name": "ontology_list",
+      "title": "Список онтологий",
+      "purpose": "Получить список онтологий Фабрики, при необходимости с поиском.",
+      "group": "Фабрика онтологий",
+      "mode": "read",
+      "access": "read",
+      "accessLabel": "ЧТЕНИЕ",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "query",
+          "type": "string",
+          "required": false,
+          "description": "Строка поиска; пустая строка возвращает полный доступный список.",
+          "default": ""
+        }
+      ],
+      "outputs": [
+        {
+          "name": "ontologies",
+          "description": "Доступные онтологии Фабрики с учётом поиска."
+        }
+      ]
+    },
+    {
+      "name": "ontology_get",
+      "title": "Карточка онтологии",
+      "purpose": "Получить полную карточку и модель одной онтологии.",
+      "group": "Фабрика онтологий",
+      "mode": "read",
+      "access": "read",
+      "accessLabel": "ЧТЕНИЕ",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "ontology_id",
+          "type": "string",
+          "required": true,
+          "description": "ID онтологии в Фабрике онтологий."
+        }
+      ],
+      "outputs": [
+        {
+          "name": "ontology",
+          "description": "Полная карточка и модель выбранной онтологии."
+        }
+      ]
+    },
+    {
+      "name": "ontology_export",
+      "title": "Экспорт онтологии",
+      "purpose": "Выгрузить онтологию из платформы в общий локальный workspace.",
+      "group": "Фабрика онтологий",
+      "mode": "write",
+      "access": "read+local-write",
+      "accessLabel": "ЭКСПОРТ",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "ontology_id",
+          "type": "string",
+          "required": true,
+          "description": "ID онтологии в Фабрике онтологий."
+        }
+      ],
+      "outputs": [
+        {
+          "name": "artifact",
+          "description": "Локальный файл экспорта и его метаданные."
+        }
+      ]
+    },
+    {
+      "name": "ontology_validate",
+      "title": "Проверка YModel",
+      "purpose": "Проверить локальный YModel, включая types/connections и лимит имён связей.",
+      "group": "Фабрика онтологий",
+      "mode": "read",
+      "access": "read",
+      "accessLabel": "ЧТЕНИЕ",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "workspace_path",
+          "type": "string",
+          "required": true,
+          "description": "Путь к файлу или папке внутри общего локального workspace."
+        }
+      ],
+      "outputs": [
+        {
+          "name": "status",
+          "description": "PASS или FAIL."
+        },
+        {
+          "name": "path",
+          "description": "Проверенный файл."
+        },
+        {
+          "name": "types",
+          "description": "Количество типов."
+        },
+        {
+          "name": "connections",
+          "description": "Количество связей."
+        },
+        {
+          "name": "connectionNamesOver32",
+          "description": "Связи с недопустимо длинными именами."
+        }
+      ]
+    },
+    {
+      "name": "ontology_import",
+      "title": "Merge онтологии",
+      "purpose": "Merge YModel в существующую онтологию; по умолчанию возвращает только план.",
+      "group": "Фабрика онтологий",
+      "mode": "write",
+      "access": "remote-write",
+      "accessLabel": "ЗАПИСЬ",
+      "confirmation": "IMPORT <ontology_id>",
+      "inputs": [
+        {
+          "name": "ontology_id",
+          "type": "string",
+          "required": true,
+          "description": "ID онтологии в Фабрике онтологий."
+        },
+        {
+          "name": "workspace_path",
+          "type": "string",
+          "required": true,
+          "description": "Путь к файлу или папке внутри общего локального workspace."
+        },
+        {
+          "name": "execute",
+          "type": "boolean",
+          "required": false,
+          "description": "При false возвращается безопасный план без изменения платформы.",
+          "default": false
+        },
+        {
+          "name": "confirmation",
+          "type": "string",
+          "required": false,
+          "description": "Точная фраза подтверждения, полученная на этапе PLAN.",
+          "default": ""
+        }
+      ],
+      "outputs": [
+        {
+          "name": "status",
+          "description": "PLAN, REJECTED или EXECUTED."
+        },
+        {
+          "name": "executed",
+          "description": "Была ли выполнена запись."
+        },
+        {
+          "name": "confirmationRequired",
+          "description": "Точная фраза для подтверждения плана."
+        },
+        {
+          "name": "validation",
+          "description": "Результат проверки YModel."
+        },
+        {
+          "name": "result",
+          "description": "Ответ импорта PowerPlatform."
+        }
+      ]
+    },
+    {
+      "name": "ontology_update",
+      "title": "Полное обновление онтологии",
+      "purpose": "Полностью обновить DTO онтологии с автоматической резервной копией и read-back.",
+      "group": "Фабрика онтологий",
+      "mode": "write",
+      "access": "remote-write",
+      "accessLabel": "ЗАПИСЬ",
+      "confirmation": "UPDATE <ontology_ids>",
+      "inputs": [
+        {
+          "name": "workspace_path",
+          "type": "string",
+          "required": true,
+          "description": "Путь к файлу или папке внутри общего локального workspace."
+        },
+        {
+          "name": "execute",
+          "type": "boolean",
+          "required": false,
+          "description": "При false возвращается безопасный план без изменения платформы.",
+          "default": false
+        },
+        {
+          "name": "confirmation",
+          "type": "string",
+          "required": false,
+          "description": "Точная фраза подтверждения, полученная на этапе PLAN.",
+          "default": ""
+        }
+      ],
+      "outputs": [
+        {
+          "name": "status",
+          "description": "PLAN или EXECUTED."
+        },
+        {
+          "name": "executed",
+          "description": "Была ли выполнена запись."
+        },
+        {
+          "name": "confirmationRequired",
+          "description": "Точная фраза для подтверждения плана."
+        },
+        {
+          "name": "backups",
+          "description": "Локальные резервные копии."
+        },
+        {
+          "name": "result",
+          "description": "Ответ обновления PowerPlatform."
+        }
+      ]
+    },
+    {
+      "name": "ontology_sync",
+      "title": "Синхронизировать диаграмму онтологии",
+      "purpose": "Передать изменённый YModel конкретной онтологии; сначала вернуть план, затем сделать backup, обновление и read-back.",
+      "group": "Фабрика онтологий",
+      "mode": "write",
+      "access": "remote-write",
+      "accessLabel": "ЗАПИСЬ",
+      "confirmation": "UPDATE <ontology_id>",
+      "inputs": [
+        {
+          "name": "ontology_id",
+          "type": "string",
+          "required": true,
+          "description": "ID онтологии PowerPlatform."
+        },
+        {
+          "name": "model",
+          "type": "object",
+          "required": true,
+          "description": "YModel с types[] и connections[]."
+        },
+        {
+          "name": "execute",
+          "type": "boolean",
+          "required": false,
+          "description": "При false создаётся только безопасный план и локальный staged DTO.",
+          "default": false
+        },
+        {
+          "name": "confirmation",
+          "type": "string",
+          "required": false,
+          "description": "Точная фраза подтверждения UPDATE <ontology_id>.",
+          "default": ""
+        }
+      ],
+      "outputs": [
+        {
+          "name": "status",
+          "description": "PLAN, EXECUTED или EXECUTED_READBACK_MISMATCH."
+        },
+        {
+          "name": "staged",
+          "description": "Локально сохранённый полный DTO онтологии."
+        },
+        {
+          "name": "verification",
+          "description": "Результат независимого read-back после записи."
+        }
+      ]
+    },
+    {
+      "name": "ontology_deploy",
+      "title": "Развернуть онтологию",
+      "purpose": "Развернуть онтологию; по умолчанию только план, после запуска выполняется read-back.",
+      "group": "Фабрика онтологий",
+      "mode": "write",
+      "access": "remote-write",
+      "accessLabel": "ЗАПИСЬ",
+      "confirmation": "DEPLOY <ontology_id>",
+      "inputs": [
+        {
+          "name": "ontology_id",
+          "type": "string",
+          "required": true,
+          "description": "ID онтологии в Фабрике онтологий."
+        },
+        {
+          "name": "execute",
+          "type": "boolean",
+          "required": false,
+          "description": "При false возвращается безопасный план без изменения платформы.",
+          "default": false
+        },
+        {
+          "name": "confirmation",
+          "type": "string",
+          "required": false,
+          "description": "Точная фраза подтверждения, полученная на этапе PLAN.",
+          "default": ""
+        }
+      ],
+      "outputs": [
+        {
+          "name": "status",
+          "description": "PLAN или EXECUTED."
+        },
+        {
+          "name": "executed",
+          "description": "Был ли выполнен deploy."
+        },
+        {
+          "name": "confirmationRequired",
+          "description": "Точная фраза для подтверждения плана."
+        },
+        {
+          "name": "result",
+          "description": "Ответ deploy."
+        },
+        {
+          "name": "readBack",
+          "description": "Контрольное чтение онтологии."
+        }
+      ]
+    },
+    {
+      "name": "pas_list_projects",
+      "title": "Проекты Студии процессов",
+      "purpose": "Получить проекты Студии моделирования процессов.",
+      "group": "Студия процессов",
+      "mode": "read",
+      "access": "read",
+      "accessLabel": "ЧТЕНИЕ",
+      "confirmation": null,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "projects",
+          "description": "Доступные проекты Студии процессов."
+        }
+      ]
+    },
+    {
+      "name": "pas_get_project",
+      "title": "Карточка проекта",
+      "purpose": "Получить один проект Студии процессов.",
+      "group": "Студия процессов",
+      "mode": "read",
+      "access": "read",
+      "accessLabel": "ЧТЕНИЕ",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "project_id",
+          "type": "string",
+          "required": true,
+          "description": "ID проекта Студии процессов."
+        }
+      ],
+      "outputs": [
+        {
+          "name": "project",
+          "description": "Карточка выбранного проекта."
+        }
+      ]
+    },
+    {
+      "name": "pas_list_models",
+      "title": "Модели проекта",
+      "purpose": "Получить готовые модели процессов выбранного проекта.",
+      "group": "Студия процессов",
+      "mode": "read",
+      "access": "read",
+      "accessLabel": "ЧТЕНИЕ",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "project_id",
+          "type": "string",
+          "required": true,
+          "description": "ID проекта Студии процессов."
+        }
+      ],
+      "outputs": [
+        {
+          "name": "models",
+          "description": "Модели выбранного проекта."
+        }
+      ]
+    },
+    {
+      "name": "pas_get_model",
+      "title": "Карточка модели",
+      "purpose": "Получить метаданные одной модели процесса.",
+      "group": "Студия процессов",
+      "mode": "read",
+      "access": "read",
+      "accessLabel": "ЧТЕНИЕ",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "model_id",
+          "type": "string",
+          "required": true,
+          "description": "ID модели процесса PAS."
+        }
+      ],
+      "outputs": [
+        {
+          "name": "model",
+          "description": "Метаданные модели процесса и её контекст."
+        }
+      ]
+    },
+    {
+      "name": "pas_get_schema",
+      "title": "Схема нодов модели",
+      "purpose": "Получить фактическую схему нодов и связей модели процесса.",
+      "group": "Студия процессов",
+      "mode": "read",
+      "access": "read",
+      "accessLabel": "ЧТЕНИЕ",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "model_id",
+          "type": "string",
+          "required": true,
+          "description": "ID модели процесса PAS."
+        }
+      ],
+      "outputs": [
+        {
+          "name": "nodes",
+          "description": "Фактическая схема нодов и связей модели."
+        }
+      ]
+    },
+    {
+      "name": "pas_create_model",
+      "title": "Создать модель процесса",
+      "purpose": "Создать отдельную модель процесса; сначала план, после выполнения — чтение созданной модели.",
+      "group": "Студия процессов",
+      "mode": "write",
+      "access": "remote-write",
+      "accessLabel": "ЗАПИСЬ",
+      "confirmation": "CREATE PROCESS <project_id>",
+      "inputs": [
+        {
+          "name": "project_id",
+          "type": "string",
+          "required": true,
+          "description": "ID проекта Студии процессов."
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": true,
+          "description": "Отображаемое название создаваемого или изменяемого объекта."
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "required": false,
+          "description": "Описание объекта.",
+          "default": ""
+        },
+        {
+          "name": "execute",
+          "type": "boolean",
+          "required": false,
+          "description": "При false возвращается безопасный план без изменения платформы.",
+          "default": false
+        },
+        {
+          "name": "confirmation",
+          "type": "string",
+          "required": false,
+          "description": "Точная фраза подтверждения, полученная на этапе PLAN.",
+          "default": ""
+        }
+      ],
+      "outputs": [
+        {
+          "name": "status",
+          "description": "PLAN или EXECUTED."
+        },
+        {
+          "name": "executed",
+          "description": "Была ли создана модель."
+        },
+        {
+          "name": "confirmationRequired",
+          "description": "Точная фраза подтверждения."
+        },
+        {
+          "name": "modelId",
+          "description": "ID созданной модели."
+        },
+        {
+          "name": "readBack",
+          "description": "Контрольное чтение модели."
+        }
+      ]
+    },
+    {
+      "name": "pas_update_model",
+      "title": "Изменить модель процесса",
+      "purpose": "Изменить название или описание модели; сначала план, после выполнения — контрольное чтение.",
+      "group": "Студия процессов",
+      "mode": "write",
+      "access": "remote-write",
+      "accessLabel": "ЗАПИСЬ",
+      "confirmation": "UPDATE PROCESS <model_id>",
+      "inputs": [
+        {
+          "name": "model_id",
+          "type": "string",
+          "required": true,
+          "description": "ID модели процесса PAS."
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": false,
+          "description": "Отображаемое название создаваемого или изменяемого объекта.",
+          "default": null
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "required": false,
+          "description": "Описание объекта.",
+          "default": null
+        },
+        {
+          "name": "execute",
+          "type": "boolean",
+          "required": false,
+          "description": "При false возвращается безопасный план без изменения платформы.",
+          "default": false
+        },
+        {
+          "name": "confirmation",
+          "type": "string",
+          "required": false,
+          "description": "Точная фраза подтверждения, полученная на этапе PLAN.",
+          "default": ""
+        }
+      ],
+      "outputs": [
+        {
+          "name": "status",
+          "description": "PLAN или EXECUTED."
+        },
+        {
+          "name": "executed",
+          "description": "Была ли изменена модель."
+        },
+        {
+          "name": "confirmationRequired",
+          "description": "Точная фраза подтверждения."
+        },
+        {
+          "name": "modelId",
+          "description": "ID модели."
+        },
+        {
+          "name": "readBack",
+          "description": "Контрольное чтение изменённых полей."
+        }
+      ]
+    },
+    {
+      "name": "pas_save_schema",
+      "title": "Сохранить схему нодов",
+      "purpose": "Записать локальную схему нодов в модель; сначала план, затем backup и read-back.",
+      "group": "Студия процессов",
+      "mode": "write",
+      "access": "remote-write",
+      "accessLabel": "ЗАПИСЬ",
+      "confirmation": "SAVE SCHEMA <model_id>",
+      "inputs": [
+        {
+          "name": "model_id",
+          "type": "string",
+          "required": true,
+          "description": "ID модели процесса PAS."
+        },
+        {
+          "name": "workspace_path",
+          "type": "string",
+          "required": true,
+          "description": "Путь к файлу или папке внутри общего локального workspace."
+        },
+        {
+          "name": "execute",
+          "type": "boolean",
+          "required": false,
+          "description": "При false возвращается безопасный план без изменения платформы.",
+          "default": false
+        },
+        {
+          "name": "confirmation",
+          "type": "string",
+          "required": false,
+          "description": "Точная фраза подтверждения, полученная на этапе PLAN.",
+          "default": ""
+        }
+      ],
+      "outputs": [
+        {
+          "name": "status",
+          "description": "PLAN или EXECUTED."
+        },
+        {
+          "name": "executed",
+          "description": "Была ли записана схема."
+        },
+        {
+          "name": "confirmationRequired",
+          "description": "Точная фраза подтверждения."
+        },
+        {
+          "name": "backup",
+          "description": "Локальная резервная копия."
+        },
+        {
+          "name": "readBack",
+          "description": "Контрольное чтение схемы."
+        }
+      ]
+    },
+    {
+      "name": "pas_export_models",
+      "title": "Экспорт моделей",
+      "purpose": "Экспортировать модели процессов в общий локальный workspace.",
+      "group": "Студия процессов",
+      "mode": "write",
+      "access": "read+local-write",
+      "accessLabel": "ЭКСПОРТ",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "model_ids",
+          "type": "array<string>",
+          "required": true,
+          "description": "Список ID моделей процесса."
+        }
+      ],
+      "outputs": [
+        {
+          "name": "artifact",
+          "description": "Локальный обменный файл моделей PAS."
+        }
+      ]
+    },
+    {
+      "name": "pas_import_models",
+      "title": "Импорт моделей",
+      "purpose": "Импортировать обменный файл PAS по ID FileContainer; по умолчанию только план.",
+      "group": "Студия процессов",
+      "mode": "write",
+      "access": "remote-write",
+      "accessLabel": "ЗАПИСЬ",
+      "confirmation": "IMPORT PROCESS <project_id>",
+      "inputs": [
+        {
+          "name": "project_id",
+          "type": "string",
+          "required": true,
+          "description": "ID проекта Студии процессов."
+        },
+        {
+          "name": "file_container_id",
+          "type": "string",
+          "required": true,
+          "description": "ID файла в PowerStorage / FileContainer."
+        },
+        {
+          "name": "execute",
+          "type": "boolean",
+          "required": false,
+          "description": "При false возвращается безопасный план без изменения платформы.",
+          "default": false
+        },
+        {
+          "name": "confirmation",
+          "type": "string",
+          "required": false,
+          "description": "Точная фраза подтверждения, полученная на этапе PLAN.",
+          "default": ""
+        }
+      ],
+      "outputs": [
+        {
+          "name": "status",
+          "description": "PLAN или EXECUTED."
+        },
+        {
+          "name": "executed",
+          "description": "Был ли выполнен импорт."
+        },
+        {
+          "name": "confirmationRequired",
+          "description": "Точная фраза подтверждения."
+        },
+        {
+          "name": "result",
+          "description": "Ответ импорта PAS."
+        }
+      ]
+    },
+    {
+      "name": "pas_list_node_templates",
+      "title": "Шаблоны нодов проекта",
+      "purpose": "Получить готовые шаблоны нодов (feature templates) проекта.",
+      "group": "Студия процессов",
+      "mode": "read",
+      "access": "read",
+      "accessLabel": "ЧТЕНИЕ",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "project_id",
+          "type": "string",
+          "required": true,
+          "description": "ID проекта Студии процессов."
+        }
+      ],
+      "outputs": [
+        {
+          "name": "templates",
+          "description": "Шаблоны нодов выбранного проекта."
+        }
+      ]
+    },
+    {
+      "name": "pas_list_nodes",
+      "title": "Каталог нодов PAS",
+      "purpose": "Запросить встроенный каталог функций-нoдов PAS с поиском и ограничением.",
+      "group": "Студия процессов",
+      "mode": "read",
+      "access": "read",
+      "accessLabel": "ЧТЕНИЕ",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "query",
+          "type": "string",
+          "required": false,
+          "description": "Строка поиска; пустая строка возвращает полный доступный список.",
+          "default": ""
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "required": false,
+          "description": "Максимальное количество возвращаемых элементов.",
+          "default": 200
+        }
+      ],
+      "outputs": [
+        {
+          "name": "groups",
+          "description": "Количество групп функций."
+        },
+        {
+          "name": "total",
+          "description": "Количество найденных нодов."
+        },
+        {
+          "name": "items",
+          "description": "Карточки нодов PAS."
+        },
+        {
+          "name": "truncated",
+          "description": "Признак сокращённой выдачи."
+        }
+      ]
+    },
+    {
+      "name": "pas_upload_file",
+      "title": "Загрузить файл в PowerStorage",
+      "purpose": "Загрузить файл из общего workspace в PowerStorage/FileContainer; сначала возвращается безопасный план.",
+      "group": "Студия процессов",
+      "mode": "write",
+      "access": "remote-write",
+      "accessLabel": "ЗАПИСЬ",
+      "confirmation": "UPLOAD FILE <sha256>",
+      "inputs": [
+        {
+          "name": "workspace_path",
+          "type": "string",
+          "required": true,
+          "description": "Путь к файлу или папке внутри общего локального workspace."
+        },
+        {
+          "name": "execute",
+          "type": "boolean",
+          "required": false,
+          "description": "При false возвращается безопасный план без изменения платформы.",
+          "default": false
+        },
+        {
+          "name": "confirmation",
+          "type": "string",
+          "required": false,
+          "description": "Точная фраза подтверждения, полученная на этапе PLAN.",
+          "default": ""
+        }
+      ],
+      "outputs": [
+        {
+          "name": "status",
+          "description": "PLAN или EXECUTED."
+        },
+        {
+          "name": "executed",
+          "description": "Был ли загружен файл."
+        },
+        {
+          "name": "confirmationRequired",
+          "description": "Фраза подтверждения с SHA-256."
+        },
+        {
+          "name": "fileContainerId",
+          "description": "ID созданного FileContainer."
+        },
+        {
+          "name": "readBack",
+          "description": "Контрольные имя, размер и MD5."
+        }
+      ]
+    },
+    {
+      "name": "pas_export_node_templates",
+      "title": "Экспорт шаблонов нодов",
+      "purpose": "Экспортировать выбранные шаблоны нодов в локальный workspace.",
+      "group": "Студия процессов",
+      "mode": "write",
+      "access": "read+local-write",
+      "accessLabel": "ЭКСПОРТ",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "template_ids",
+          "type": "array<string>",
+          "required": true,
+          "description": "Список ID шаблонов нодов."
+        }
+      ],
+      "outputs": [
+        {
+          "name": "artifact",
+          "description": "Локальный обменный файл шаблонов нодов."
+        }
+      ]
+    },
+    {
+      "name": "pas_import_node_templates",
+      "title": "Импорт шаблонов нодов",
+      "purpose": "Импортировать шаблоны нодов по ID FileContainer; по умолчанию только план.",
+      "group": "Студия процессов",
+      "mode": "write",
+      "access": "remote-write",
+      "accessLabel": "ЗАПИСЬ",
+      "confirmation": "IMPORT NODES <project_id>",
+      "inputs": [
+        {
+          "name": "project_id",
+          "type": "string",
+          "required": true,
+          "description": "ID проекта Студии процессов."
+        },
+        {
+          "name": "file_container_id",
+          "type": "string",
+          "required": true,
+          "description": "ID файла в PowerStorage / FileContainer."
+        },
+        {
+          "name": "execute",
+          "type": "boolean",
+          "required": false,
+          "description": "При false возвращается безопасный план без изменения платформы.",
+          "default": false
+        },
+        {
+          "name": "confirmation",
+          "type": "string",
+          "required": false,
+          "description": "Точная фраза подтверждения, полученная на этапе PLAN.",
+          "default": ""
+        }
+      ],
+      "outputs": [
+        {
+          "name": "status",
+          "description": "PLAN или EXECUTED."
+        },
+        {
+          "name": "executed",
+          "description": "Был ли выполнен импорт."
+        },
+        {
+          "name": "confirmationRequired",
+          "description": "Точная фраза подтверждения."
+        },
+        {
+          "name": "result",
+          "description": "Ответ импорта PAS."
+        }
+      ]
+    },
+    {
+      "name": "pas_list_executions",
+      "title": "Журнал исполнений",
+      "purpose": "Получить журнал исполнений, по умолчанию мои за последний день.",
+      "group": "Студия процессов",
+      "mode": "read",
+      "access": "read",
+      "accessLabel": "ЧТЕНИЕ",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "filters",
+          "type": "array<string>",
+          "required": false,
+          "description": "Фильтры журнала исполнений PAS.",
+          "default": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "executions",
+          "description": "Исполнения PAS с учётом фильтров."
+        }
+      ]
+    },
+    {
+      "name": "pas_get_execution",
+      "title": "Карточка исполнения",
+      "purpose": "Получить исполнение с моделью, файлами и входными параметрами.",
+      "group": "Студия процессов",
+      "mode": "read",
+      "access": "read",
+      "accessLabel": "ЧТЕНИЕ",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "execution_id",
+          "type": "string",
+          "required": true,
+          "description": "ID исполнения процесса."
+        }
+      ],
+      "outputs": [
+        {
+          "name": "execution",
+          "description": "Карточка исполнения с моделью, файлом и входными параметрами."
+        }
+      ]
+    },
+    {
+      "name": "pas_execution_details",
+      "title": "Результат и журнал исполнения",
+      "purpose": "Получить результат, подробности и журнал одного исполнения.",
+      "group": "Студия процессов",
+      "mode": "read",
+      "access": "read",
+      "accessLabel": "ЧТЕНИЕ",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "execution_id",
+          "type": "string",
+          "required": true,
+          "description": "ID исполнения процесса."
+        }
+      ],
+      "outputs": [
+        {
+          "name": "execution",
+          "description": "Карточка исполнения."
+        },
+        {
+          "name": "details",
+          "description": "Результат и подробности."
+        },
+        {
+          "name": "log",
+          "description": "Журнал исполнения."
+        },
+        {
+          "name": "detailsStatus",
+          "description": "Доступность подробностей."
+        },
+        {
+          "name": "logStatus",
+          "description": "Доступность журнала."
+        }
+      ]
+    },
+    {
+      "name": "pas_run",
+      "title": "Запустить модель",
+      "purpose": "Подготовить или запустить модель. Параметры задаются по ID входных нодов; запуск требует точного подтверждения. В debug_options.breakpoints допустимы только объекты PAS DebugBreakpoint, не строки с ID нодов.",
+      "group": "Студия процессов",
+      "mode": "write",
+      "access": "remote-execute",
+      "accessLabel": "ЗАПУСК",
+      "confirmation": "RUN <model_id>",
+      "inputs": [
+        {
+          "name": "model_id",
+          "type": "string",
+          "required": true,
+          "description": "ID модели процесса PAS."
+        },
+        {
+          "name": "parameters",
+          "type": "object",
+          "required": false,
+          "description": "Значения входных параметров по ID входных нодов PAS.",
+          "default": null
+        },
+        {
+          "name": "debug",
+          "type": "boolean",
+          "required": false,
+          "description": "Запустить модель в режиме отладки.",
+          "default": false
+        },
+        {
+          "name": "debug_options",
+          "type": "object",
+          "required": false,
+          "description": "Настройки отладки; breakpoints принимают объекты PAS DebugBreakpoint.",
+          "default": null
+        },
+        {
+          "name": "execute",
+          "type": "boolean",
+          "required": false,
+          "description": "При false возвращается безопасный план без изменения платформы.",
+          "default": false
+        },
+        {
+          "name": "confirmation",
+          "type": "string",
+          "required": false,
+          "description": "Точная фраза подтверждения, полученная на этапе PLAN.",
+          "default": ""
+        }
+      ],
+      "outputs": [
+        {
+          "name": "status",
+          "description": "PLAN или EXECUTED."
+        },
+        {
+          "name": "executed",
+          "description": "Было ли запущено исполнение."
+        },
+        {
+          "name": "confirmationRequired",
+          "description": "Точная фраза подтверждения."
+        },
+        {
+          "name": "executionId",
+          "description": "ID созданного исполнения."
+        },
+        {
+          "name": "readBack",
+          "description": "Контрольное чтение исполнения."
+        }
+      ]
+    },
+    {
+      "name": "pas_debug_state",
+      "title": "Состояние отладки",
+      "purpose": "Прочитать текущее состояние отладочной сессии исполнения.",
+      "group": "Студия процессов",
+      "mode": "read",
+      "access": "read",
+      "accessLabel": "ЧТЕНИЕ",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "execution_id",
+          "type": "string",
+          "required": true,
+          "description": "ID исполнения процесса."
+        }
+      ],
+      "outputs": [
+        {
+          "name": "state",
+          "description": "Текущее состояние отладочной сессии."
+        }
+      ]
+    },
+    {
+      "name": "pas_debug_command",
+      "title": "Команда отладчика",
+      "purpose": "Подготовить или послать pause/continue/step/step-node/detach в отладчик.",
+      "group": "Студия процессов",
+      "mode": "write",
+      "access": "remote-execute",
+      "accessLabel": "ЗАПУСК",
+      "confirmation": "DEBUG <command> <execution_id>",
+      "inputs": [
+        {
+          "name": "execution_id",
+          "type": "string",
+          "required": true,
+          "description": "ID исполнения процесса."
+        },
+        {
+          "name": "command",
+          "type": "string",
+          "required": true,
+          "description": "Команда pause, continue, step, step-node или detach."
+        },
+        {
+          "name": "execute",
+          "type": "boolean",
+          "required": false,
+          "description": "При false возвращается безопасный план без изменения платформы.",
+          "default": false
+        },
+        {
+          "name": "confirmation",
+          "type": "string",
+          "required": false,
+          "description": "Точная фраза подтверждения, полученная на этапе PLAN.",
+          "default": ""
+        }
+      ],
+      "outputs": [
+        {
+          "name": "status",
+          "description": "PLAN или EXECUTED."
+        },
+        {
+          "name": "executed",
+          "description": "Была ли отправлена команда."
+        },
+        {
+          "name": "confirmationRequired",
+          "description": "Точная фраза подтверждения."
+        },
+        {
+          "name": "result",
+          "description": "Ответ отладчика PAS."
+        }
+      ]
+    },
+    {
+      "name": "tracker_current_user",
+      "title": "Текущий пользователь",
+      "purpose": "Получить текущего пользователя платформы для привязки трекера.",
+      "group": "Трекер",
+      "mode": "read",
+      "access": "read",
+      "accessLabel": "ЧТЕНИЕ",
+      "confirmation": null,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "user",
+          "description": "Текущий пользователь PowerPlatform."
+        }
+      ]
+    },
+    {
+      "name": "tracker_projects",
+      "title": "Проекты трекера",
+      "purpose": "Получить доступные текущему пользователю проекты трекера.",
+      "group": "Трекер",
+      "mode": "read",
+      "access": "read",
+      "accessLabel": "ЧТЕНИЕ",
+      "confirmation": null,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "projects",
+          "description": "Доступные текущему пользователю проекты трекера."
+        }
+      ]
+    },
+    {
+      "name": "cadlib_status",
+      "title": "Состояние CADLib",
+      "purpose": "Показать источник CADLib, карту и доступность проверенных экспортёров.",
+      "group": "CADLib",
+      "mode": "read",
+      "access": "read",
+      "accessLabel": "ЧТЕНИЕ",
+      "confirmation": null,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "status",
+          "description": "Готовность read-only экспорта CADLib."
+        },
+        {
+          "name": "server",
+          "description": "SQL Server CADLib."
+        },
+        {
+          "name": "database",
+          "description": "База CADLib."
+        },
+        {
+          "name": "mapUrl",
+          "description": "Адрес локальной карты."
+        },
+        {
+          "name": "exporters",
+          "description": "Доступность проверенных экспортёров."
+        }
+      ]
+    },
+    {
+      "name": "python_node_scaffold",
+      "title": "Создать Python-нод",
+      "purpose": "Создать локальный Python sidecar-нод с JSON stdin/stdout контрактом.",
+      "group": "Локальные Python-ноды",
+      "mode": "write",
+      "access": "local-write",
+      "accessLabel": "ЛОКАЛЬНО",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "description": "Техническое имя локального объекта или нода."
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": true,
+          "description": "Отображаемое название создаваемого или изменяемого объекта."
+        },
+        {
+          "name": "inputs",
+          "type": "array<string>",
+          "required": false,
+          "description": "Названия входов создаваемого локального Python-нода.",
+          "default": null
+        },
+        {
+          "name": "outputs",
+          "type": "array<string>",
+          "required": false,
+          "description": "Названия выходов создаваемого локального Python-нода.",
+          "default": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "status",
+          "description": "CREATED при успешном создании."
+        },
+        {
+          "name": "folder",
+          "description": "Папка нода."
+        },
+        {
+          "name": "script",
+          "description": "Путь к node.py."
+        },
+        {
+          "name": "manifest",
+          "description": "Путь к node.json."
+        }
+      ]
+    },
+    {
+      "name": "python_node_validate",
+      "title": "Проверить Python-нод",
+      "purpose": "Статически проверить manifest и run(inputs) локального Python-нода.",
+      "group": "Локальные Python-ноды",
+      "mode": "read",
+      "access": "read",
+      "accessLabel": "ЧТЕНИЕ",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "workspace_path",
+          "type": "string",
+          "required": true,
+          "description": "Путь к файлу или папке внутри общего локального workspace."
+        }
+      ],
+      "outputs": [
+        {
+          "name": "status",
+          "description": "PASS или FAIL."
+        },
+        {
+          "name": "folder",
+          "description": "Папка нода."
+        },
+        {
+          "name": "name",
+          "description": "Техническое имя."
+        },
+        {
+          "name": "errors",
+          "description": "Ошибки контракта или Python-кода."
+        },
+        {
+          "name": "deployment",
+          "description": "Статус размещения."
+        }
+      ]
+    },
+    {
+      "name": "python_node_test",
+      "title": "Тест Python-нода",
+      "purpose": "Запустить локальный Python-нод на тестовом JSON; требует подтверждения RUN PYTHON <name>.",
+      "group": "Локальные Python-ноды",
+      "mode": "write",
+      "access": "local-execute",
+      "accessLabel": "ЛОК. ЗАПУСК",
+      "confirmation": "RUN PYTHON <name>",
+      "inputs": [
+        {
+          "name": "workspace_path",
+          "type": "string",
+          "required": true,
+          "description": "Путь к файлу или папке внутри общего локального workspace."
+        },
+        {
+          "name": "sample",
+          "type": "object",
+          "required": true,
+          "description": "Тестовый JSON, передаваемый в run(inputs)."
+        },
+        {
+          "name": "execute",
+          "type": "boolean",
+          "required": false,
+          "description": "При false возвращается безопасный план без изменения платформы.",
+          "default": false
+        },
+        {
+          "name": "confirmation",
+          "type": "string",
+          "required": false,
+          "description": "Точная фраза подтверждения, полученная на этапе PLAN.",
+          "default": ""
+        }
+      ],
+      "outputs": [
+        {
+          "name": "status",
+          "description": "PLAN, PASS или FAIL."
+        },
+        {
+          "name": "executed",
+          "description": "Был ли запущен локальный тест."
+        },
+        {
+          "name": "confirmationRequired",
+          "description": "Точная фраза подтверждения."
+        },
+        {
+          "name": "output",
+          "description": "JSON-результат run(inputs)."
+        },
+        {
+          "name": "stderr",
+          "description": "Диагностика процесса."
+        }
+      ]
+    },
+    {
+      "name": "python_node_export",
+      "title": "Экспорт Python-нода",
+      "purpose": "Упаковать проверенный Python-нод в ZIP для передачи интеграционному адаптеру.",
+      "group": "Локальные Python-ноды",
+      "mode": "write",
+      "access": "local-write",
+      "accessLabel": "ЛОКАЛЬНО",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "workspace_path",
+          "type": "string",
+          "required": true,
+          "description": "Путь к файлу или папке внутри общего локального workspace."
+        }
+      ],
+      "outputs": [
+        {
+          "name": "artifact",
+          "description": "ZIP-пакет нода и его метаданные."
+        },
+        {
+          "name": "deploymentStatus",
+          "description": "LOCAL_ONLY до подключения адаптера PAS."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,4379 @@
+{
+  "schemaVersion": 1,
+  "publishedAt": "2026-09-16T10:09:04+00:00",
+  "defaultModelId": "public-process",
+  "defaultOntologyId": "public-ontology",
+  "project": {
+    "id": "public-project",
+    "code": "PUBLIC",
+    "title": "Публичный просмотр PowerPlatform",
+    "status": "active"
+  },
+  "model": {
+    "id": "public-process",
+    "code": "PM-01072",
+    "title": "PaddleOCR PDF — текст, JSON и файл",
+    "status": "draft",
+    "initParameters": []
+  },
+  "schema": [
+    {
+      "id": "process-node-001",
+      "function": "iterator",
+      "parent": null,
+      "position": {
+        "x": 480.0,
+        "y": 0.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "array",
+            "title": "Список элементов",
+            "type": "array",
+            "arrayType": "pdfPage",
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-004",
+            "output": "pages"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "successor",
+          "title": "",
+          "type": "signal",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "error",
+          "title": "Ошибка",
+          "type": "error",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {
+        "height": 850,
+        "width": 2700,
+        "parallel": false
+      }
+    },
+    {
+      "id": "process-node-002",
+      "function": "iterator",
+      "parent": "process-node-001",
+      "position": {
+        "x": 1580.0,
+        "y": 20.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "array",
+            "title": "Массив элементов",
+            "type": "array",
+            "arrayType": "smartArea",
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-034",
+            "output": "array"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "successor",
+          "title": "",
+          "type": "signal",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "error",
+          "title": "Ошибка",
+          "type": "error",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {
+        "width": 1040,
+        "height": 390,
+        "parallel": false
+      }
+    },
+    {
+      "id": "process-node-003",
+      "function": "execution-init-parameter",
+      "parent": null,
+      "position": {
+        "x": 8.0,
+        "y": -174.0
+      },
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "value",
+          "title": "Значение",
+          "type": "file",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {
+        "title": "PDF файл",
+        "type": "file",
+        "order": 1,
+        "arrayType": ""
+      }
+    },
+    {
+      "id": "process-node-004",
+      "function": "read-pdf",
+      "parent": null,
+      "position": {
+        "x": 232.0,
+        "y": -175.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "file",
+            "title": "Файл",
+            "type": "file",
+            "arrayType": null,
+            "optional": null,
+            "basic": true
+          },
+          "connection": {
+            "node": "process-node-003",
+            "output": "value"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "pages",
+          "title": "Список страниц",
+          "type": "array",
+          "arrayType": "pdfPage",
+          "optional": null,
+          "basic": true
+        },
+        {
+          "name": "numberOfPages",
+          "title": "Число страниц",
+          "type": "integer",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "isPdf",
+          "title": "PDF?",
+          "type": "boolean",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "file",
+          "title": "Файл",
+          "type": "file",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "title",
+          "title": "Название",
+          "type": "string",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "isOk",
+          "title": "Файл прочитан",
+          "type": "signal",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "isError",
+          "title": "Ошибка при чтении",
+          "type": "signal",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "errorMessage",
+          "title": "Текст ошибки",
+          "type": "string",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {}
+    },
+    {
+      "id": "process-node-005",
+      "function": "iterator-input",
+      "parent": "process-node-001",
+      "position": {
+        "x": 200.0,
+        "y": 50.0
+      },
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "index",
+          "title": "Индекс",
+          "type": "integer",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "element",
+          "title": "Элемент",
+          "type": "pdfPage",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "count",
+          "title": "Размер",
+          "type": "integer",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {}
+    },
+    {
+      "id": "process-node-006",
+      "function": "pdf-page-info",
+      "parent": "process-node-001",
+      "position": {
+        "x": 76.0,
+        "y": 48.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "page",
+            "title": "Страница",
+            "type": "pdfPage",
+            "arrayType": null,
+            "optional": null,
+            "basic": true
+          },
+          "connection": {
+            "node": "process-node-005",
+            "output": "element"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "sa",
+          "title": "SA",
+          "type": "smartArea",
+          "arrayType": null,
+          "optional": null,
+          "basic": true
+        },
+        {
+          "name": "pageIndex",
+          "title": "Номер",
+          "type": "integer",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "searchable",
+          "title": "Наличие текстового слоя",
+          "type": "boolean",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "height",
+          "title": "Высота",
+          "type": "integer",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "width",
+          "title": "Ширина",
+          "type": "integer",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "file",
+          "title": "Файл",
+          "type": "file",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {}
+    },
+    {
+      "id": "process-node-007",
+      "function": "get-env-var",
+      "parent": "process-node-002",
+      "position": {
+        "x": 292.0,
+        "y": 150.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "name",
+            "title": "Название",
+            "type": "string",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "value",
+          "title": "Значение",
+          "type": "any",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {
+        "name": "ocr_chunks",
+        "type": "array",
+        "arrayType": "string"
+      }
+    },
+    {
+      "id": "process-node-008",
+      "function": "string-array-builder",
+      "parent": "process-node-002",
+      "position": {
+        "x": 500.0,
+        "y": 83.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "array",
+            "title": "Набор строк",
+            "type": "array",
+            "arrayType": "string",
+            "optional": true,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-007",
+            "output": "value"
+          }
+        },
+        {
+          "input": {
+            "name": "string",
+            "title": "Строка",
+            "type": "any",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-037",
+            "output": "text"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "array",
+          "title": "Набор строк",
+          "type": "array",
+          "arrayType": "string",
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "string",
+          "title": "Строка",
+          "type": "string",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {}
+    },
+    {
+      "id": "process-node-009",
+      "function": "set-env-var",
+      "parent": "process-node-002",
+      "position": {
+        "x": 720.0,
+        "y": 83.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "name",
+            "title": "Название",
+            "type": "string",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "value",
+            "title": "Значение",
+            "type": "any",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-008",
+            "output": "array"
+          }
+        }
+      ],
+      "outputs": [],
+      "controls": {
+        "name": "ocr_chunks"
+      }
+    },
+    {
+      "id": "process-node-010",
+      "function": "get-env-var",
+      "parent": null,
+      "position": {
+        "x": 3200.0,
+        "y": 45.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "name",
+            "title": "Название",
+            "type": "string",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "predecessor",
+            "title": "",
+            "type": "signal",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-001",
+            "output": "successor"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "value",
+          "title": "Значение",
+          "type": "any",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {
+        "name": "ocr_chunks",
+        "type": "array",
+        "arrayType": "string"
+      }
+    },
+    {
+      "id": "process-node-011",
+      "function": "join-array",
+      "parent": null,
+      "position": {
+        "x": 3410.0,
+        "y": 45.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "array",
+            "title": "Набор",
+            "type": "array",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-010",
+            "output": "value"
+          }
+        },
+        {
+          "input": {
+            "name": "delimeter",
+            "title": "Разделитель",
+            "type": "string",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "string",
+          "title": "Строка",
+          "type": "string",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {
+        "delimeter": "\n\n--- фрагмент ---\n\n"
+      }
+    },
+    {
+      "id": "process-node-012",
+      "function": "string-replacement",
+      "parent": null,
+      "position": {
+        "x": 3200.0,
+        "y": -125.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "string",
+            "title": "Строка",
+            "type": "string",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-004",
+            "output": "title"
+          }
+        },
+        {
+          "input": {
+            "name": "template",
+            "title": "Шаблон",
+            "type": "string",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "replacement",
+            "title": "Замена",
+            "type": "string",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "result",
+          "title": "Строка",
+          "type": "string",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "template",
+          "title": "Шаблон",
+          "type": "string",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "replacement",
+          "title": "Замена",
+          "type": "string",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "replaced",
+          "title": "Наличие замены",
+          "type": "boolean",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {
+        "template": "\\.pdf$",
+        "replacement": ""
+      }
+    },
+    {
+      "id": "process-node-013",
+      "function": "join-strings",
+      "parent": null,
+      "position": {
+        "x": 3410.0,
+        "y": -125.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "string1",
+            "title": "Строка 1",
+            "type": "any",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-012",
+            "output": "result"
+          }
+        },
+        {
+          "input": {
+            "name": "string2",
+            "title": "Строка 2",
+            "type": "any",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "string",
+          "title": "Строка",
+          "type": "string",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "count",
+          "title": "Количество символов",
+          "type": "integer",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {
+        "string2": ".paddleocr.txt"
+      }
+    },
+    {
+      "id": "process-node-014",
+      "function": "save-text-to-fc",
+      "parent": null,
+      "position": {
+        "x": 3790.0,
+        "y": 30.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "filename",
+            "title": "Название",
+            "type": "string",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-013",
+            "output": "string"
+          }
+        },
+        {
+          "input": {
+            "name": "content",
+            "title": "Содержимое",
+            "type": "any",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-011",
+            "output": "string"
+          }
+        },
+        {
+          "input": {
+            "name": "directory",
+            "title": "ID директории",
+            "type": "string",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-048",
+            "output": "string"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "file",
+          "title": "Контейнер файла",
+          "type": "string",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {}
+    },
+    {
+      "id": "process-node-015",
+      "function": "execution-output-parameter",
+      "parent": null,
+      "position": {
+        "x": 4100.0,
+        "y": 30.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "value",
+            "title": "Любое значение",
+            "type": "string",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-014",
+            "output": "file"
+          }
+        }
+      ],
+      "outputs": [],
+      "controls": {
+        "title": "Файл OCR (FileContainer)"
+      }
+    },
+    {
+      "id": "process-node-016",
+      "function": "array",
+      "parent": "process-node-001",
+      "position": {
+        "x": 985.0,
+        "y": 20.0
+      },
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "array",
+          "title": "Массив",
+          "type": "array",
+          "arrayType": "smartArea",
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {
+        "type": "smartArea"
+      }
+    },
+    {
+      "id": "process-node-017",
+      "function": "coordinates-smart-crop",
+      "parent": "process-node-001",
+      "position": {
+        "x": 270.0,
+        "y": 20.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "sa",
+            "title": "SA",
+            "type": "smartArea",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-006",
+            "output": "sa"
+          }
+        },
+        {
+          "input": {
+            "name": "title",
+            "title": "Название",
+            "type": "string",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "w",
+            "title": "Ширина листа",
+            "type": "integer",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "h",
+            "title": "Высота листа",
+            "type": "integer",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "x1",
+            "title": "x1",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "y1",
+            "title": "y1",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "x2",
+            "title": "x2",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "y2",
+            "title": "y2",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "sa",
+          "title": "SA",
+          "type": "smartArea",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {
+        "title": "Фрагмент 1",
+        "w": 100,
+        "h": 100,
+        "x1": 0,
+        "y1": 0,
+        "x2": 35,
+        "y2": 35
+      }
+    },
+    {
+      "id": "process-node-018",
+      "function": "coordinates-smart-crop",
+      "parent": "process-node-001",
+      "position": {
+        "x": 495.0,
+        "y": 20.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "sa",
+            "title": "SA",
+            "type": "smartArea",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-006",
+            "output": "sa"
+          }
+        },
+        {
+          "input": {
+            "name": "title",
+            "title": "Название",
+            "type": "string",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "w",
+            "title": "Ширина листа",
+            "type": "integer",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "h",
+            "title": "Высота листа",
+            "type": "integer",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "x1",
+            "title": "x1",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "y1",
+            "title": "y1",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "x2",
+            "title": "x2",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "y2",
+            "title": "y2",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "sa",
+          "title": "SA",
+          "type": "smartArea",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {
+        "title": "Фрагмент 2",
+        "w": 100,
+        "h": 100,
+        "x1": 32,
+        "y1": 0,
+        "x2": 68,
+        "y2": 35
+      }
+    },
+    {
+      "id": "process-node-019",
+      "function": "coordinates-smart-crop",
+      "parent": "process-node-001",
+      "position": {
+        "x": 720.0,
+        "y": 20.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "sa",
+            "title": "SA",
+            "type": "smartArea",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-006",
+            "output": "sa"
+          }
+        },
+        {
+          "input": {
+            "name": "title",
+            "title": "Название",
+            "type": "string",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "w",
+            "title": "Ширина листа",
+            "type": "integer",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "h",
+            "title": "Высота листа",
+            "type": "integer",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "x1",
+            "title": "x1",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "y1",
+            "title": "y1",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "x2",
+            "title": "x2",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "y2",
+            "title": "y2",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "sa",
+          "title": "SA",
+          "type": "smartArea",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {
+        "title": "Фрагмент 3",
+        "w": 100,
+        "h": 100,
+        "x1": 65,
+        "y1": 0,
+        "x2": 100,
+        "y2": 35
+      }
+    },
+    {
+      "id": "process-node-020",
+      "function": "coordinates-smart-crop",
+      "parent": "process-node-001",
+      "position": {
+        "x": 270.0,
+        "y": 265.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "sa",
+            "title": "SA",
+            "type": "smartArea",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-006",
+            "output": "sa"
+          }
+        },
+        {
+          "input": {
+            "name": "title",
+            "title": "Название",
+            "type": "string",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "w",
+            "title": "Ширина листа",
+            "type": "integer",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "h",
+            "title": "Высота листа",
+            "type": "integer",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "x1",
+            "title": "x1",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "y1",
+            "title": "y1",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "x2",
+            "title": "x2",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "y2",
+            "title": "y2",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "sa",
+          "title": "SA",
+          "type": "smartArea",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {
+        "title": "Фрагмент 4",
+        "w": 100,
+        "h": 100,
+        "x1": 0,
+        "y1": 32,
+        "x2": 35,
+        "y2": 68
+      }
+    },
+    {
+      "id": "process-node-021",
+      "function": "coordinates-smart-crop",
+      "parent": "process-node-001",
+      "position": {
+        "x": 495.0,
+        "y": 265.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "sa",
+            "title": "SA",
+            "type": "smartArea",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-006",
+            "output": "sa"
+          }
+        },
+        {
+          "input": {
+            "name": "title",
+            "title": "Название",
+            "type": "string",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "w",
+            "title": "Ширина листа",
+            "type": "integer",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "h",
+            "title": "Высота листа",
+            "type": "integer",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "x1",
+            "title": "x1",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "y1",
+            "title": "y1",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "x2",
+            "title": "x2",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "y2",
+            "title": "y2",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "sa",
+          "title": "SA",
+          "type": "smartArea",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {
+        "title": "Фрагмент 5",
+        "w": 100,
+        "h": 100,
+        "x1": 32,
+        "y1": 32,
+        "x2": 68,
+        "y2": 68
+      }
+    },
+    {
+      "id": "process-node-022",
+      "function": "coordinates-smart-crop",
+      "parent": "process-node-001",
+      "position": {
+        "x": 720.0,
+        "y": 265.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "sa",
+            "title": "SA",
+            "type": "smartArea",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-006",
+            "output": "sa"
+          }
+        },
+        {
+          "input": {
+            "name": "title",
+            "title": "Название",
+            "type": "string",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "w",
+            "title": "Ширина листа",
+            "type": "integer",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "h",
+            "title": "Высота листа",
+            "type": "integer",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "x1",
+            "title": "x1",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "y1",
+            "title": "y1",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "x2",
+            "title": "x2",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "y2",
+            "title": "y2",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "sa",
+          "title": "SA",
+          "type": "smartArea",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {
+        "title": "Фрагмент 6",
+        "w": 100,
+        "h": 100,
+        "x1": 65,
+        "y1": 32,
+        "x2": 100,
+        "y2": 68
+      }
+    },
+    {
+      "id": "process-node-023",
+      "function": "coordinates-smart-crop",
+      "parent": "process-node-001",
+      "position": {
+        "x": 270.0,
+        "y": 510.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "sa",
+            "title": "SA",
+            "type": "smartArea",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-006",
+            "output": "sa"
+          }
+        },
+        {
+          "input": {
+            "name": "title",
+            "title": "Название",
+            "type": "string",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "w",
+            "title": "Ширина листа",
+            "type": "integer",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "h",
+            "title": "Высота листа",
+            "type": "integer",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "x1",
+            "title": "x1",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "y1",
+            "title": "y1",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "x2",
+            "title": "x2",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "y2",
+            "title": "y2",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "sa",
+          "title": "SA",
+          "type": "smartArea",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {
+        "title": "Фрагмент 7",
+        "w": 100,
+        "h": 100,
+        "x1": 0,
+        "y1": 65,
+        "x2": 35,
+        "y2": 100
+      }
+    },
+    {
+      "id": "process-node-024",
+      "function": "coordinates-smart-crop",
+      "parent": "process-node-001",
+      "position": {
+        "x": 495.0,
+        "y": 510.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "sa",
+            "title": "SA",
+            "type": "smartArea",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-006",
+            "output": "sa"
+          }
+        },
+        {
+          "input": {
+            "name": "title",
+            "title": "Название",
+            "type": "string",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "w",
+            "title": "Ширина листа",
+            "type": "integer",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "h",
+            "title": "Высота листа",
+            "type": "integer",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "x1",
+            "title": "x1",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "y1",
+            "title": "y1",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "x2",
+            "title": "x2",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "y2",
+            "title": "y2",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "sa",
+          "title": "SA",
+          "type": "smartArea",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {
+        "title": "Фрагмент 8",
+        "w": 100,
+        "h": 100,
+        "x1": 32,
+        "y1": 65,
+        "x2": 68,
+        "y2": 100
+      }
+    },
+    {
+      "id": "process-node-025",
+      "function": "coordinates-smart-crop",
+      "parent": "process-node-001",
+      "position": {
+        "x": 720.0,
+        "y": 510.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "sa",
+            "title": "SA",
+            "type": "smartArea",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-006",
+            "output": "sa"
+          }
+        },
+        {
+          "input": {
+            "name": "title",
+            "title": "Название",
+            "type": "string",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "w",
+            "title": "Ширина листа",
+            "type": "integer",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "h",
+            "title": "Высота листа",
+            "type": "integer",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "x1",
+            "title": "x1",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "y1",
+            "title": "y1",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "x2",
+            "title": "x2",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        },
+        {
+          "input": {
+            "name": "y2",
+            "title": "y2",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "sa",
+          "title": "SA",
+          "type": "smartArea",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {
+        "title": "Фрагмент 9",
+        "w": 100,
+        "h": 100,
+        "x1": 65,
+        "y1": 65,
+        "x2": 100,
+        "y2": 100
+      }
+    },
+    {
+      "id": "process-node-026",
+      "function": "add-to-array",
+      "parent": "process-node-001",
+      "position": {
+        "x": 985.0,
+        "y": 105.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "array",
+            "title": "Массив",
+            "type": "array",
+            "arrayType": "smartArea",
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-016",
+            "output": "array"
+          }
+        },
+        {
+          "input": {
+            "name": "object",
+            "title": "Элемент",
+            "type": "smartArea",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-017",
+            "output": "sa"
+          }
+        },
+        {
+          "input": {
+            "name": "index",
+            "title": "Номер элемента",
+            "type": "integer",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "array",
+          "title": "Массив",
+          "type": "array",
+          "arrayType": "smartArea",
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "size",
+          "title": "Количество элементов",
+          "type": "integer",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {}
+    },
+    {
+      "id": "process-node-027",
+      "function": "add-to-array",
+      "parent": "process-node-001",
+      "position": {
+        "x": 1170.0,
+        "y": 105.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "array",
+            "title": "Массив",
+            "type": "array",
+            "arrayType": "smartArea",
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-026",
+            "output": "array"
+          }
+        },
+        {
+          "input": {
+            "name": "object",
+            "title": "Элемент",
+            "type": "smartArea",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-018",
+            "output": "sa"
+          }
+        },
+        {
+          "input": {
+            "name": "index",
+            "title": "Номер элемента",
+            "type": "integer",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "array",
+          "title": "Массив",
+          "type": "array",
+          "arrayType": "smartArea",
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "size",
+          "title": "Количество элементов",
+          "type": "integer",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {}
+    },
+    {
+      "id": "process-node-028",
+      "function": "add-to-array",
+      "parent": "process-node-001",
+      "position": {
+        "x": 1355.0,
+        "y": 105.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "array",
+            "title": "Массив",
+            "type": "array",
+            "arrayType": "smartArea",
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-027",
+            "output": "array"
+          }
+        },
+        {
+          "input": {
+            "name": "object",
+            "title": "Элемент",
+            "type": "smartArea",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-019",
+            "output": "sa"
+          }
+        },
+        {
+          "input": {
+            "name": "index",
+            "title": "Номер элемента",
+            "type": "integer",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "array",
+          "title": "Массив",
+          "type": "array",
+          "arrayType": "smartArea",
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "size",
+          "title": "Количество элементов",
+          "type": "integer",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {}
+    },
+    {
+      "id": "process-node-029",
+      "function": "add-to-array",
+      "parent": "process-node-001",
+      "position": {
+        "x": 985.0,
+        "y": 230.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "array",
+            "title": "Массив",
+            "type": "array",
+            "arrayType": "smartArea",
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-028",
+            "output": "array"
+          }
+        },
+        {
+          "input": {
+            "name": "object",
+            "title": "Элемент",
+            "type": "smartArea",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-020",
+            "output": "sa"
+          }
+        },
+        {
+          "input": {
+            "name": "index",
+            "title": "Номер элемента",
+            "type": "integer",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "array",
+          "title": "Массив",
+          "type": "array",
+          "arrayType": "smartArea",
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "size",
+          "title": "Количество элементов",
+          "type": "integer",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {}
+    },
+    {
+      "id": "process-node-030",
+      "function": "add-to-array",
+      "parent": "process-node-001",
+      "position": {
+        "x": 1170.0,
+        "y": 230.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "array",
+            "title": "Массив",
+            "type": "array",
+            "arrayType": "smartArea",
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-029",
+            "output": "array"
+          }
+        },
+        {
+          "input": {
+            "name": "object",
+            "title": "Элемент",
+            "type": "smartArea",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-021",
+            "output": "sa"
+          }
+        },
+        {
+          "input": {
+            "name": "index",
+            "title": "Номер элемента",
+            "type": "integer",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "array",
+          "title": "Массив",
+          "type": "array",
+          "arrayType": "smartArea",
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "size",
+          "title": "Количество элементов",
+          "type": "integer",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {}
+    },
+    {
+      "id": "process-node-031",
+      "function": "add-to-array",
+      "parent": "process-node-001",
+      "position": {
+        "x": 1355.0,
+        "y": 230.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "array",
+            "title": "Массив",
+            "type": "array",
+            "arrayType": "smartArea",
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-030",
+            "output": "array"
+          }
+        },
+        {
+          "input": {
+            "name": "object",
+            "title": "Элемент",
+            "type": "smartArea",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-022",
+            "output": "sa"
+          }
+        },
+        {
+          "input": {
+            "name": "index",
+            "title": "Номер элемента",
+            "type": "integer",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "array",
+          "title": "Массив",
+          "type": "array",
+          "arrayType": "smartArea",
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "size",
+          "title": "Количество элементов",
+          "type": "integer",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {}
+    },
+    {
+      "id": "process-node-032",
+      "function": "add-to-array",
+      "parent": "process-node-001",
+      "position": {
+        "x": 985.0,
+        "y": 355.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "array",
+            "title": "Массив",
+            "type": "array",
+            "arrayType": "smartArea",
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-031",
+            "output": "array"
+          }
+        },
+        {
+          "input": {
+            "name": "object",
+            "title": "Элемент",
+            "type": "smartArea",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-023",
+            "output": "sa"
+          }
+        },
+        {
+          "input": {
+            "name": "index",
+            "title": "Номер элемента",
+            "type": "integer",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "array",
+          "title": "Массив",
+          "type": "array",
+          "arrayType": "smartArea",
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "size",
+          "title": "Количество элементов",
+          "type": "integer",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {}
+    },
+    {
+      "id": "process-node-033",
+      "function": "add-to-array",
+      "parent": "process-node-001",
+      "position": {
+        "x": 1170.0,
+        "y": 355.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "array",
+            "title": "Массив",
+            "type": "array",
+            "arrayType": "smartArea",
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-032",
+            "output": "array"
+          }
+        },
+        {
+          "input": {
+            "name": "object",
+            "title": "Элемент",
+            "type": "smartArea",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-024",
+            "output": "sa"
+          }
+        },
+        {
+          "input": {
+            "name": "index",
+            "title": "Номер элемента",
+            "type": "integer",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "array",
+          "title": "Массив",
+          "type": "array",
+          "arrayType": "smartArea",
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "size",
+          "title": "Количество элементов",
+          "type": "integer",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {}
+    },
+    {
+      "id": "process-node-034",
+      "function": "add-to-array",
+      "parent": "process-node-001",
+      "position": {
+        "x": 1355.0,
+        "y": 355.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "array",
+            "title": "Массив",
+            "type": "array",
+            "arrayType": "smartArea",
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-033",
+            "output": "array"
+          }
+        },
+        {
+          "input": {
+            "name": "object",
+            "title": "Элемент",
+            "type": "smartArea",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-025",
+            "output": "sa"
+          }
+        },
+        {
+          "input": {
+            "name": "index",
+            "title": "Номер элемента",
+            "type": "integer",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "array",
+          "title": "Массив",
+          "type": "array",
+          "arrayType": "smartArea",
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "size",
+          "title": "Количество элементов",
+          "type": "integer",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {}
+    },
+    {
+      "id": "process-node-035",
+      "function": "iterator-input",
+      "parent": "process-node-002",
+      "position": {
+        "x": 1400.0,
+        "y": 50.0
+      },
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "index",
+          "title": "Индекс",
+          "type": "integer",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "element",
+          "title": "Элемент",
+          "type": "smartArea",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "count",
+          "title": "Размер",
+          "type": "integer",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {}
+    },
+    {
+      "id": "process-node-036",
+      "function": "sa-to-image",
+      "parent": "process-node-002",
+      "position": {
+        "x": 92.0,
+        "y": 50.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "sa",
+            "title": "SA",
+            "type": "smartArea",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-035",
+            "output": "element"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "title": "Изображение",
+          "type": "image",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {}
+    },
+    {
+      "id": "process-node-037",
+      "function": "ai-text-extract",
+      "parent": "process-node-002",
+      "position": {
+        "x": 292.0,
+        "y": 50.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "image",
+            "title": "Изображение",
+            "type": "image",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-036",
+            "output": "image"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "text",
+          "title": "Текст",
+          "type": "string",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {}
+    },
+    {
+      "id": "process-node-038",
+      "function": "object-to-json",
+      "parent": null,
+      "position": {
+        "x": 3620.0,
+        "y": 160.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "object",
+            "title": "Объект",
+            "type": "any",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-010",
+            "output": "value"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "json",
+          "title": "JSON",
+          "type": "string",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {}
+    },
+    {
+      "id": "process-node-039",
+      "function": "execution-output-parameter",
+      "parent": null,
+      "position": {
+        "x": 4100.0,
+        "y": 110.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "value",
+            "title": "Новое значение",
+            "type": "string",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-011",
+            "output": "string"
+          }
+        }
+      ],
+      "outputs": [],
+      "controls": {
+        "title": "Текст OCR"
+      }
+    },
+    {
+      "id": "process-node-040",
+      "function": "execution-output-parameter",
+      "parent": null,
+      "position": {
+        "x": 4100.0,
+        "y": 190.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "value",
+            "title": "Новое значение",
+            "type": "string",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-038",
+            "output": "json"
+          }
+        }
+      ],
+      "outputs": [],
+      "controls": {
+        "title": "JSON фрагментов"
+      }
+    },
+    {
+      "id": "process-node-041",
+      "function": "execution-output-parameter",
+      "parent": null,
+      "position": {
+        "x": 4100.0,
+        "y": 270.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "value",
+            "title": "Новое значение",
+            "type": "integer",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-004",
+            "output": "numberOfPages"
+          }
+        }
+      ],
+      "outputs": [],
+      "controls": {
+        "title": "Количество страниц"
+      }
+    },
+    {
+      "id": "process-node-042",
+      "function": "console-log",
+      "parent": null,
+      "position": {
+        "x": 3790.0,
+        "y": 275.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "object",
+            "title": "Любой объект",
+            "type": "any",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-011",
+            "output": "string"
+          }
+        }
+      ],
+      "outputs": [],
+      "controls": {
+        "message": "PaddleOCR text"
+      }
+    },
+    {
+      "id": "process-node-043",
+      "function": "save-text-to-fc",
+      "parent": null,
+      "position": {
+        "x": 3790.0,
+        "y": 360.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "filename",
+            "title": "Название",
+            "type": "string",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-049",
+            "output": "string"
+          }
+        },
+        {
+          "input": {
+            "name": "content",
+            "title": "Содержимое",
+            "type": "any",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-011",
+            "output": "string"
+          }
+        },
+        {
+          "input": {
+            "name": "directory",
+            "title": "ID директории",
+            "type": "string",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-048",
+            "output": "string"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "file",
+          "title": "Контейнер файла",
+          "type": "string",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {}
+    },
+    {
+      "id": "process-node-044",
+      "function": "execution-output-parameter",
+      "parent": null,
+      "position": {
+        "x": 4100.0,
+        "y": 360.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "value",
+            "title": "Любое значение",
+            "type": "string",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-043",
+            "output": "file"
+          }
+        }
+      ],
+      "outputs": [],
+      "controls": {
+        "title": "Файл OCR Markdown (FileContainer)"
+      }
+    },
+    {
+      "id": "process-node-045",
+      "function": "join-strings",
+      "parent": null,
+      "position": {
+        "x": 3410.0,
+        "y": 470.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "string1",
+            "title": "Строка 1",
+            "type": "any",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-012",
+            "output": "result"
+          }
+        },
+        {
+          "input": {
+            "name": "string2",
+            "title": "Строка 2",
+            "type": "any",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "string",
+          "title": "Строка",
+          "type": "string",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "count",
+          "title": "Количество символов",
+          "type": "integer",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {
+        "string2": ".paddleocr.json"
+      }
+    },
+    {
+      "id": "process-node-046",
+      "function": "save-text-to-fc",
+      "parent": null,
+      "position": {
+        "x": 3790.0,
+        "y": 470.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "filename",
+            "title": "Название",
+            "type": "string",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-045",
+            "output": "string"
+          }
+        },
+        {
+          "input": {
+            "name": "content",
+            "title": "Содержимое",
+            "type": "any",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-038",
+            "output": "json"
+          }
+        },
+        {
+          "input": {
+            "name": "directory",
+            "title": "ID директории",
+            "type": "string",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-048",
+            "output": "string"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "file",
+          "title": "Контейнер файла",
+          "type": "string",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {}
+    },
+    {
+      "id": "process-node-047",
+      "function": "execution-output-parameter",
+      "parent": null,
+      "position": {
+        "x": 4100.0,
+        "y": 470.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "value",
+            "title": "Любое значение",
+            "type": "string",
+            "arrayType": null,
+            "optional": null,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-046",
+            "output": "file"
+          }
+        }
+      ],
+      "outputs": [],
+      "controls": {
+        "title": "Файл OCR JSON (FileContainer)"
+      }
+    },
+    {
+      "id": "process-node-048",
+      "function": "string-input",
+      "parent": null,
+      "position": {
+        "x": 3590.0,
+        "y": 285.0
+      },
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "string",
+          "title": "Строка",
+          "type": "string",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {
+        "value": "[скрыто в публичной версии]"
+      }
+    },
+    {
+      "id": "process-node-049",
+      "function": "join-strings",
+      "parent": null,
+      "position": {
+        "x": 4129.0,
+        "y": 555.0
+      },
+      "inputs": [
+        {
+          "input": {
+            "name": "string1",
+            "title": "Строка 1",
+            "type": "any",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": {
+            "node": "process-node-012",
+            "output": "result"
+          }
+        },
+        {
+          "input": {
+            "name": "string2",
+            "title": "Строка 2",
+            "type": "any",
+            "arrayType": null,
+            "optional": true,
+            "basic": null
+          },
+          "connection": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "string",
+          "title": "Строка",
+          "type": "string",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        },
+        {
+          "name": "count",
+          "title": "Количество символов",
+          "type": "integer",
+          "arrayType": null,
+          "optional": null,
+          "basic": null
+        }
+      ],
+      "controls": {
+        "string2": ".paddleocr.md"
+      }
+    }
+  ],
+  "nodeDefinitions": [
+    {
+      "id": "ai-text-extract",
+      "name": "Извлечь текст с помощью PaddleOCR",
+      "description": "Извлекает текст из изображения с помощью PaddleOCR",
+      "group": "Анализ документов ГЛИ",
+      "inputs": [
+        {
+          "title": "Изображение",
+          "name": "image",
+          "type": "image"
+        }
+      ],
+      "outputs": [
+        {
+          "title": "Текст",
+          "name": "text",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "id": "iterator",
+      "name": "Выполнить для каждого элемента",
+      "description": "Принимает наборы объектов любого типа, считает их и последовательно, для каждого элемента из набора, выполняет определённые внутри действия",
+      "group": "Организация процесса",
+      "inputs": [
+        {
+          "title": "Список элементов",
+          "name": "array",
+          "type": "array",
+          "basic": true
+        }
+      ],
+      "outputs": [],
+      "controls": [
+        {
+          "title": "Параллельная обработка",
+          "name": "parallel",
+          "type": "boolean",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "set-env-var",
+      "name": "Задать переменную",
+      "description": "Позволяет задать переменную в ходе выполнения процесса",
+      "group": "Организация процесса",
+      "inputs": [
+        {
+          "title": "Название",
+          "name": "name",
+          "type": "string",
+          "optional": true
+        },
+        {
+          "title": "Значение",
+          "name": "value",
+          "type": "any"
+        }
+      ],
+      "outputs": [],
+      "controls": [
+        {
+          "name": "name",
+          "title": "Название",
+          "type": "string",
+          "controlType": "textarea",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "execution-output-parameter",
+      "name": "Передать параметр из процесса",
+      "description": "Позволяет добавить параметр, который будет передан из процесса",
+      "group": "Организация процесса",
+      "inputs": [
+        {
+          "title": "Любое значение",
+          "name": "value",
+          "type": "any"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "id": "get-env-var",
+      "name": "Получить переменную",
+      "description": "Позволяет получить переменную в ходе выполнения процесса",
+      "group": "Организация процесса",
+      "inputs": [
+        {
+          "title": "Название",
+          "name": "name",
+          "type": "string",
+          "optional": true
+        }
+      ],
+      "outputs": [
+        {
+          "title": "Значение",
+          "name": "value",
+          "type": "any"
+        }
+      ],
+      "controls": [
+        {
+          "name": "name",
+          "title": "Название",
+          "type": "string",
+          "controlType": "textarea",
+          "optional": true
+        },
+        {
+          "name": "type",
+          "title": "Тип",
+          "type": "string",
+          "controlType": "custom"
+        },
+        {
+          "name": "arrayType",
+          "title": "Тип данных массива",
+          "type": "string",
+          "controlType": "custom"
+        }
+      ]
+    },
+    {
+      "id": "execution-init-parameter",
+      "name": "Указать параметр при запуске",
+      "description": "Позволяет добавить параметр, который необходимо задать при запуске",
+      "group": "Организация процесса",
+      "inputs": [],
+      "outputs": [
+        {
+          "title": "Значение",
+          "name": "value",
+          "type": "any"
+        }
+      ]
+    },
+    {
+      "id": "string-array-builder",
+      "name": "Добавить строку в набор",
+      "description": "Сохраняет результат обработки одного элемента \"штампа\" на странице одного файла в сессии массовой обработки файлов",
+      "group": "Примитивные операции",
+      "inputs": [
+        {
+          "title": "Набор строк",
+          "name": "array",
+          "type": "array",
+          "arrayType": "string",
+          "optional": true
+        },
+        {
+          "title": "Строка",
+          "name": "string",
+          "type": "any"
+        }
+      ],
+      "outputs": [
+        {
+          "title": "Набор строк",
+          "name": "array",
+          "type": "array",
+          "arrayType": "string"
+        },
+        {
+          "title": "Строка",
+          "name": "string",
+          "type": "string"
+        }
+      ],
+      "controls": [
+        {
+          "title": "Строка",
+          "name": "string",
+          "type": "any"
+        }
+      ]
+    },
+    {
+      "id": "join-array",
+      "name": "Объединить в строку",
+      "description": "Объединяет массив в одну строку через заданный разделитель",
+      "group": "Примитивные операции",
+      "inputs": [
+        {
+          "title": "Набор",
+          "name": "array",
+          "type": "array"
+        },
+        {
+          "title": "Разделитель",
+          "name": "delimeter",
+          "type": "string",
+          "optional": true
+        }
+      ],
+      "outputs": [
+        {
+          "title": "Строка",
+          "name": "string",
+          "type": "string"
+        }
+      ],
+      "controls": [
+        {
+          "title": "Разделитель",
+          "name": "delimeter",
+          "type": "string",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "object-to-json",
+      "name": "Преобразовать в JSON",
+      "description": "Формирует JSON",
+      "group": "Примитивные операции",
+      "inputs": [
+        {
+          "title": "Объект",
+          "name": "object",
+          "type": "any"
+        }
+      ],
+      "outputs": [
+        {
+          "title": "JSON",
+          "name": "json",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "id": "string-replacement",
+      "name": "Преобразовать строку",
+      "description": "Преобразует строку согласно регулярному выражению",
+      "group": "Примитивные операции",
+      "inputs": [
+        {
+          "title": "Строка",
+          "name": "string",
+          "type": "string"
+        },
+        {
+          "title": "Шаблон",
+          "name": "template",
+          "type": "string",
+          "optional": true
+        },
+        {
+          "title": "Замена",
+          "name": "replacement",
+          "type": "string",
+          "optional": true
+        }
+      ],
+      "outputs": [
+        {
+          "title": "Строка",
+          "name": "result",
+          "type": "string"
+        },
+        {
+          "title": "Шаблон",
+          "name": "template",
+          "type": "string"
+        },
+        {
+          "title": "Замена",
+          "name": "replacement",
+          "type": "string"
+        },
+        {
+          "title": "Наличие замены",
+          "name": "replaced",
+          "type": "boolean"
+        }
+      ],
+      "controls": [
+        {
+          "name": "template",
+          "title": "Шаблон",
+          "type": "string",
+          "controlType": "textarea",
+          "optional": true
+        },
+        {
+          "name": "replacement",
+          "title": "Замена",
+          "type": "string",
+          "controlType": "textarea",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "join-strings",
+      "name": "Сложить две строки",
+      "description": "Объединяет две строки",
+      "group": "Примитивные операции",
+      "inputs": [
+        {
+          "title": "Строка 1",
+          "name": "string1",
+          "type": "any",
+          "optional": true
+        },
+        {
+          "title": "Строка 2",
+          "name": "string2",
+          "type": "any",
+          "optional": true
+        }
+      ],
+      "outputs": [
+        {
+          "title": "Строка",
+          "name": "string",
+          "type": "string"
+        },
+        {
+          "title": "Количество символов",
+          "name": "count",
+          "type": "integer"
+        }
+      ],
+      "controls": [
+        {
+          "name": "string1",
+          "title": "Строка 1",
+          "type": "string",
+          "controlType": "textarea",
+          "optional": true
+        },
+        {
+          "name": "string2",
+          "title": "Строка 2",
+          "type": "string",
+          "controlType": "textarea",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "add-to-array",
+      "name": "Добавить в массив",
+      "description": "Выполняет выбранную операцию ( +, -, *, / ) над операндами.",
+      "group": "Работа с данными",
+      "inputs": [
+        {
+          "title": "Массив",
+          "name": "array",
+          "type": "array",
+          "basic": true
+        },
+        {
+          "title": "Элемент",
+          "name": "object",
+          "type": "any",
+          "basic": true
+        },
+        {
+          "title": "Номер элемента",
+          "name": "index",
+          "type": "integer",
+          "optional": true
+        }
+      ],
+      "outputs": [
+        {
+          "title": "Массив",
+          "name": "array",
+          "type": "array"
+        },
+        {
+          "title": "Количество элементов",
+          "name": "size",
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "id": "array",
+      "name": "Задать массив",
+      "description": "Создает массив",
+      "group": "Работа с данными",
+      "inputs": [],
+      "outputs": [
+        {
+          "title": "Массив",
+          "name": "array",
+          "type": "array"
+        }
+      ],
+      "controls": [
+        {
+          "name": "type",
+          "title": "Тип",
+          "type": "string",
+          "controlType": "custom"
+        }
+      ]
+    },
+    {
+      "id": "string-input",
+      "name": "Задать строку",
+      "description": "Возвращает указанную строку",
+      "group": "Работа с данными",
+      "inputs": [],
+      "outputs": [
+        {
+          "title": "Строка",
+          "name": "string",
+          "type": "string"
+        }
+      ],
+      "controls": [
+        {
+          "name": "value",
+          "title": "Строка",
+          "type": "string",
+          "controlType": "textarea"
+        }
+      ]
+    },
+    {
+      "id": "coordinates-smart-crop",
+      "name": "Обрезать по координатам",
+      "description": "Обрезает изображение по заданным координатам",
+      "group": "Работа с изображениями",
+      "inputs": [
+        {
+          "title": "SA",
+          "name": "sa",
+          "type": "smartArea"
+        },
+        {
+          "title": "Название",
+          "name": "title",
+          "type": "string",
+          "optional": true
+        },
+        {
+          "title": "Ширина листа",
+          "name": "w",
+          "type": "integer",
+          "optional": true
+        },
+        {
+          "title": "Высота листа",
+          "name": "h",
+          "type": "integer",
+          "optional": true
+        },
+        {
+          "title": "x1",
+          "name": "x1",
+          "type": "integer"
+        },
+        {
+          "title": "y1",
+          "name": "y1",
+          "type": "integer"
+        },
+        {
+          "title": "x2",
+          "name": "x2",
+          "type": "integer"
+        },
+        {
+          "title": "y2",
+          "name": "y2",
+          "type": "integer"
+        }
+      ],
+      "outputs": [
+        {
+          "title": "SA",
+          "name": "sa",
+          "type": "smartArea"
+        }
+      ],
+      "controls": [
+        {
+          "title": "Название",
+          "name": "title",
+          "type": "string",
+          "optional": true
+        },
+        {
+          "title": "Ширина листа",
+          "name": "w",
+          "type": "integer",
+          "optional": true
+        },
+        {
+          "title": "Высота листа",
+          "name": "h",
+          "type": "integer",
+          "optional": true
+        },
+        {
+          "title": "x1",
+          "name": "x1",
+          "type": "integer"
+        },
+        {
+          "title": "y1",
+          "name": "y1",
+          "type": "integer"
+        },
+        {
+          "title": "x2",
+          "name": "x2",
+          "type": "integer"
+        },
+        {
+          "title": "y2",
+          "name": "y2",
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "id": "sa-to-image",
+      "name": "Получить изображение",
+      "description": "Формирует изображение на основе SA",
+      "group": "Работа с изображениями",
+      "inputs": [
+        {
+          "title": "SA",
+          "name": "sa",
+          "type": "smartArea"
+        }
+      ],
+      "outputs": [
+        {
+          "title": "Изображение",
+          "name": "image",
+          "type": "image"
+        }
+      ],
+      "controls": []
+    },
+    {
+      "id": "read-pdf",
+      "name": "Прочитать PDF файл",
+      "description": "Считывает переданный файл как pdf и получает дополнительную информацию о нем",
+      "group": "Работа с файлами",
+      "inputs": [
+        {
+          "title": "Файл",
+          "name": "file",
+          "type": "file",
+          "basic": true
+        }
+      ],
+      "outputs": [
+        {
+          "title": "Список страниц",
+          "name": "pages",
+          "type": "array",
+          "arrayType": "pdfPage",
+          "basic": true
+        },
+        {
+          "title": "Число страниц",
+          "name": "numberOfPages",
+          "type": "integer"
+        },
+        {
+          "title": "PDF?",
+          "name": "isPdf",
+          "type": "boolean"
+        },
+        {
+          "title": "Файл",
+          "name": "file",
+          "type": "file"
+        },
+        {
+          "title": "Название",
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "title": "Файл прочитан",
+          "name": "isOk",
+          "type": "signal"
+        },
+        {
+          "title": "Ошибка при чтении",
+          "name": "isError",
+          "type": "signal"
+        },
+        {
+          "title": "Текст ошибки",
+          "name": "errorMessage",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "id": "save-text-to-fc",
+      "name": "Сохранить в файл",
+      "description": "Сохраняет содержимое как FileContainer",
+      "group": "Работа с файлами",
+      "inputs": [
+        {
+          "title": "Название",
+          "name": "filename",
+          "type": "string"
+        },
+        {
+          "title": "Содержимое",
+          "name": "content",
+          "type": "any"
+        },
+        {
+          "title": "ID директории",
+          "name": "directory",
+          "type": "string",
+          "optional": true
+        }
+      ],
+      "outputs": [
+        {
+          "title": "Контейнер файла",
+          "name": "file",
+          "type": "string"
+        }
+      ],
+      "controls": [
+        {
+          "title": "Название",
+          "name": "filename",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "id": "pdf-page-info",
+      "name": "Считать свойства страницы PDF",
+      "description": "Предоставляет подробную информацию о странице",
+      "group": "Работа с файлами",
+      "inputs": [
+        {
+          "title": "Страница",
+          "name": "page",
+          "type": "pdfPage",
+          "basic": true
+        }
+      ],
+      "outputs": [
+        {
+          "title": "SA",
+          "name": "sa",
+          "type": "smartArea",
+          "basic": true
+        },
+        {
+          "title": "Номер",
+          "name": "pageIndex",
+          "type": "integer"
+        },
+        {
+          "title": "Наличие текстового слоя",
+          "name": "searchable",
+          "type": "boolean"
+        },
+        {
+          "title": "Высота",
+          "name": "height",
+          "type": "integer"
+        },
+        {
+          "title": "Ширина",
+          "name": "width",
+          "type": "integer"
+        },
+        {
+          "title": "Файл",
+          "name": "file",
+          "type": "file"
+        }
+      ]
+    },
+    {
+      "id": "console-log",
+      "name": "Вывести в консоль",
+      "description": "Выводит в консоль полученный объект",
+      "group": "Системные операции",
+      "inputs": [
+        {
+          "title": "Любой объект",
+          "name": "object",
+          "type": "any",
+          "optional": true
+        }
+      ],
+      "outputs": [],
+      "controls": [
+        {
+          "title": "Сообщение",
+          "name": "message",
+          "type": "string",
+          "optional": true
+        }
+      ]
+    }
+  ],
+  "ontology": {
+    "id": "public-ontology",
+    "code": "111",
+    "title": "MS_cadlib_test_v1",
+    "description": "",
+    "deployed": true,
+    "model": {
+      "connections": [
+        {
+          "cardinality": "one2many",
+          "description": "Project -> корневые узлы structure_data.",
+          "from": "Project",
+          "fromAlias": "containsStructureNodes",
+          "modified": null,
+          "name": "ContainsProjectStructure",
+          "systemName": null,
+          "to": "StructureNode",
+          "toAlias": "containedByProject"
+        },
+        {
+          "cardinality": "one2many",
+          "description": "Нативная рекурсия structure_data по idParentObject.",
+          "from": "StructureNode",
+          "fromAlias": "containsStructureNodes",
+          "modified": null,
+          "name": "ContainsStructureNodeChild",
+          "systemName": null,
+          "to": "StructureNode",
+          "toAlias": "parentStructureNode"
+        },
+        {
+          "cardinality": "many2many",
+          "description": "Множественные ObjectsRelationsShadow между структурой и объектами.",
+          "from": "StructureNode",
+          "fromAlias": "relatedObjects",
+          "modified": null,
+          "name": "LinksStructureNodeMSObject",
+          "systemName": null,
+          "to": "ModelStudioObject",
+          "toAlias": "structureNodes"
+        },
+        {
+          "cardinality": "one2many",
+          "description": "Объект -> подобъект по ObjectsShadow.idParentObject.",
+          "from": "ModelStudioObject",
+          "fromAlias": "containsModelStudioObjects",
+          "modified": null,
+          "name": "ContainsModelStudioObjectChild",
+          "systemName": null,
+          "to": "ModelStudioObject",
+          "toAlias": "parentModelStudioObject"
+        }
+      ],
+      "types": [
+        {
+          "abstractType": false,
+          "attributes": [
+            {
+              "defaultValue": null,
+              "description": null,
+              "generate": null,
+              "generatedPrefix": null,
+              "inputType": "input",
+              "modified": null,
+              "name": "Title",
+              "noHistory": false,
+              "notNull": false,
+              "type": "text",
+              "unique": false
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "generate": null,
+              "generatedPrefix": "",
+              "inputType": null,
+              "modified": null,
+              "name": "Code",
+              "noHistory": false,
+              "notNull": false,
+              "type": "generated",
+              "unique": false
+            },
+            {
+              "defaultValue": null,
+              "description": "Стабильный идентификатор источника.",
+              "generate": null,
+              "generatedPrefix": null,
+              "inputType": "input",
+              "modified": null,
+              "name": "ExternalId",
+              "noHistory": false,
+              "notNull": true,
+              "type": "varchar(180)",
+              "unique": true
+            },
+            {
+              "defaultValue": null,
+              "description": "Имя исходной базы CADLib.",
+              "generate": null,
+              "generatedPrefix": null,
+              "inputType": "input",
+              "modified": null,
+              "name": "SourceDatabase",
+              "noHistory": false,
+              "notNull": true,
+              "type": "varchar(255)",
+              "unique": false
+            },
+            {
+              "defaultValue": null,
+              "description": "DBUID исходной базы CADLib.",
+              "generate": null,
+              "generatedPrefix": null,
+              "inputType": "input",
+              "modified": null,
+              "name": "SourceDatabaseUid",
+              "noHistory": false,
+              "notNull": true,
+              "type": "varchar(180)",
+              "unique": false
+            },
+            {
+              "defaultValue": null,
+              "description": "Ревизия снимка PipeDB.",
+              "generate": null,
+              "generatedPrefix": null,
+              "inputType": "input",
+              "modified": null,
+              "name": "DatabaseRevision",
+              "noHistory": false,
+              "notNull": false,
+              "type": "varchar(64)",
+              "unique": false
+            },
+            {
+              "defaultValue": null,
+              "description": "Версия исходной PipeDB.",
+              "generate": null,
+              "generatedPrefix": null,
+              "inputType": "input",
+              "modified": null,
+              "name": "DatabaseVersion",
+              "noHistory": false,
+              "notNull": false,
+              "type": "varchar(64)",
+              "unique": false
+            },
+            {
+              "defaultValue": null,
+              "description": "Исходные свойства проекта.",
+              "generate": null,
+              "generatedPrefix": null,
+              "inputType": null,
+              "modified": null,
+              "name": "Properties",
+              "noHistory": false,
+              "notNull": false,
+              "type": "jsonb",
+              "unique": false
+            }
+          ],
+          "base": null,
+          "description": "Корень проекта CADLib.",
+          "events": null,
+          "extendable": true,
+          "modified": null,
+          "name": "Project",
+          "noHistory": false,
+          "systemName": null,
+          "viewConfig": null
+        },
+        {
+          "abstractType": false,
+          "attributes": [
+            {
+              "defaultValue": null,
+              "description": null,
+              "generate": null,
+              "generatedPrefix": null,
+              "inputType": "input",
+              "modified": null,
+              "name": "Title",
+              "noHistory": false,
+              "notNull": false,
+              "type": "text",
+              "unique": false
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "generate": null,
+              "generatedPrefix": "",
+              "inputType": null,
+              "modified": null,
+              "name": "Code",
+              "noHistory": false,
+              "notNull": false,
+              "type": "generated",
+              "unique": false
+            },
+            {
+              "defaultValue": null,
+              "description": "Детерминированный идентификатор узла структуры.",
+              "generate": null,
+              "generatedPrefix": null,
+              "inputType": "input",
+              "modified": null,
+              "name": "ExternalId",
+              "noHistory": false,
+              "notNull": true,
+              "type": "varchar(180)",
+              "unique": true
+            },
+            {
+              "defaultValue": null,
+              "description": "ObjectsShadow.idObject узла structure_data.",
+              "generate": null,
+              "generatedPrefix": null,
+              "inputType": null,
+              "modified": null,
+              "name": "SourceId",
+              "noHistory": false,
+              "notNull": true,
+              "type": "bigint",
+              "unique": false
+            },
+            {
+              "defaultValue": null,
+              "description": "UID узла structure_data.",
+              "generate": null,
+              "generatedPrefix": null,
+              "inputType": "input",
+              "modified": null,
+              "name": "SourceUid",
+              "noHistory": false,
+              "notNull": false,
+              "type": "varchar(180)",
+              "unique": false
+            },
+            {
+              "defaultValue": null,
+              "description": "ObjectsShadow.idParentObject.",
+              "generate": null,
+              "generatedPrefix": null,
+              "inputType": null,
+              "modified": null,
+              "name": "SourceParentId",
+              "noHistory": false,
+              "notNull": false,
+              "type": "bigint",
+              "unique": false
+            },
+            {
+              "defaultValue": null,
+              "description": "Порядок узла в CADLib.",
+              "generate": null,
+              "generatedPrefix": null,
+              "inputType": null,
+              "modified": null,
+              "name": "SourceOrder",
+              "noHistory": false,
+              "notNull": false,
+              "type": "bigint",
+              "unique": false
+            },
+            {
+              "defaultValue": null,
+              "description": "Глубина в нативном дереве.",
+              "generate": null,
+              "generatedPrefix": null,
+              "inputType": null,
+              "modified": null,
+              "name": "StructureDepth",
+              "noHistory": false,
+              "notNull": true,
+              "type": "integer",
+              "unique": false
+            },
+            {
+              "defaultValue": null,
+              "description": "Полный путь CADLib.",
+              "generate": null,
+              "generatedPrefix": null,
+              "inputType": null,
+              "modified": null,
+              "name": "StructurePath",
+              "noHistory": false,
+              "notNull": false,
+              "type": "text",
+              "unique": false
+            },
+            {
+              "defaultValue": null,
+              "description": "Код исходной категории.",
+              "generate": null,
+              "generatedPrefix": null,
+              "inputType": "input",
+              "modified": null,
+              "name": "CategoryCode",
+              "noHistory": false,
+              "notNull": false,
+              "type": "varchar(128)",
+              "unique": false
+            },
+            {
+              "defaultValue": null,
+              "description": "Исходные свойства узла.",
+              "generate": null,
+              "generatedPrefix": null,
+              "inputType": null,
+              "modified": null,
+              "name": "Properties",
+              "noHistory": false,
+              "notNull": false,
+              "type": "jsonb",
+              "unique": false
+            }
+          ],
+          "base": null,
+          "description": "Узел нативного дерева structure_data CADLib.",
+          "events": null,
+          "extendable": true,
+          "modified": null,
+          "name": "StructureNode",
+          "noHistory": false,
+          "systemName": null,
+          "viewConfig": null
+        },
+        {
+          "abstractType": false,
+          "attributes": [
+            {
+              "defaultValue": null,
+              "description": null,
+              "generate": null,
+              "generatedPrefix": null,
+              "inputType": "input",
+              "modified": null,
+              "name": "Title",
+              "noHistory": false,
+              "notNull": false,
+              "type": "text",
+              "unique": false
+            },
+            {
+              "defaultValue": null,
+              "description": null,
+              "generate": null,
+              "generatedPrefix": "",
+              "inputType": null,
+              "modified": null,
+              "name": "Code",
+              "noHistory": false,
+              "notNull": false,
+              "type": "generated",
+              "unique": false
+            },
+            {
+              "defaultValue": null,
+              "description": "Стабильный идентификатор объекта CADLib.",
+              "generate": null,
+              "generatedPrefix": null,
+              "inputType": "input",
+              "modified": null,
+              "name": "ExternalId",
+              "noHistory": false,
+              "notNull": true,
+              "type": "varchar(180)",
+              "unique": true
+            },
+            {
+              "defaultValue": null,
+              "description": "ObjectsShadow.idObject.",
+              "generate": null,
+              "generatedPrefix": null,
+              "inputType": null,
+              "modified": null,
+              "name": "SourceId",
+              "noHistory": false,
+              "notNull": true,
+              "type": "bigint",
+              "unique": false
+            },
+            {
+              "defaultValue": null,
+              "description": "UID объекта CADLib.",
+              "generate": null,
+              "generatedPrefix": null,
+              "inputType": "input",
+              "modified": null,
+              "name": "SourceUid",
+              "noHistory": false,
+              "notNull": false,
+              "type": "varchar(180)",
+              "unique": false
+            },
+            {
+              "defaultValue": null,
+              "description": "ObjectsShadow.idParentObject.",
+              "generate": null,
+              "generatedPrefix": null,
+              "inputType": null,
+              "modified": null,
+              "name": "SourceParentId",
+              "noHistory": false,
+              "notNull": false,
+              "type": "bigint",
+              "unique": false
+            },
+            {
+              "defaultValue": null,
+              "description": "Локальный идентификатор элемента.",
+              "generate": null,
+              "generatedPrefix": null,
+              "inputType": null,
+              "modified": null,
+              "name": "SourceLocalId",
+              "noHistory": false,
+              "notNull": false,
+              "type": "bigint",
+              "unique": false
+            },
+            {
+              "defaultValue": null,
+              "description": "Порядок объекта в CADLib.",
+              "generate": null,
+              "generatedPrefix": null,
+              "inputType": null,
+              "modified": null,
+              "name": "SourceOrder",
+              "noHistory": false,
+              "notNull": false,
+              "type": "bigint",
+              "unique": false
+            },
+            {
+              "defaultValue": null,
+              "description": "Идентификатор категории CADLib.",
+              "generate": null,
+              "generatedPrefix": null,
+              "inputType": null,
+              "modified": null,
+              "name": "CategoryId",
+              "noHistory": false,
+              "notNull": false,
+              "type": "bigint",
+              "unique": false
+            },
+            {
+              "defaultValue": null,
+              "description": "Код категории CADLib.",
+              "generate": null,
+              "generatedPrefix": null,
+              "inputType": "input",
+              "modified": null,
+              "name": "CategoryCode",
+              "noHistory": false,
+              "notNull": false,
+              "type": "varchar(128)",
+              "unique": false
+            },
+            {
+              "defaultValue": null,
+              "description": "Название категории CADLib.",
+              "generate": null,
+              "generatedPrefix": null,
+              "inputType": "input",
+              "modified": null,
+              "name": "CategoryTitle",
+              "noHistory": false,
+              "notNull": false,
+              "type": "text",
+              "unique": false
+            },
+            {
+              "defaultValue": null,
+              "description": "Дата изменения в CADLib.",
+              "generate": null,
+              "generatedPrefix": null,
+              "inputType": null,
+              "modified": null,
+              "name": "ModifiedAtSource",
+              "noHistory": false,
+              "notNull": false,
+              "type": "timestamp",
+              "unique": false
+            },
+            {
+              "defaultValue": null,
+              "description": "Исходные relation type и узлы назначения.",
+              "generate": null,
+              "generatedPrefix": null,
+              "inputType": null,
+              "modified": null,
+              "name": "SourceRelations",
+              "noHistory": false,
+              "notNull": false,
+              "type": "jsonb",
+              "unique": false
+            },
+            {
+              "defaultValue": null,
+              "description": "Исходные свойства и параметры объекта.",
+              "generate": null,
+              "generatedPrefix": null,
+              "inputType": null,
+              "modified": null,
+              "name": "Properties",
+              "noHistory": false,
+              "notNull": false,
+              "type": "jsonb",
+              "unique": false
+            }
+          ],
+          "base": null,
+          "description": "Объект или вложенный подобъект Model Studio.",
+          "events": null,
+          "extendable": true,
+          "modified": null,
+          "name": "ModelStudioObject",
+          "noHistory": false,
+          "systemName": null,
+          "viewConfig": null
+        }
+      ]
+    }
+  }
+}
