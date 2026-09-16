@@ -249,4 +249,35 @@ body.published-mode #run-graph,body.published-mode #debug-graph,body.published-m
 .wire-flow{fill:none;stroke:transparent;stroke-width:5;stroke-linecap:round;vector-effect:non-scaling-stroke;pointer-events:none}.wire-flow.exec-done{stroke:color-mix(in srgb,var(--teal) 72%,transparent);stroke-dasharray:4 7}.wire-flow.exec-error{stroke:var(--red);stroke-width:6;stroke-dasharray:3 5}.wire.exec-transfer{stroke:color-mix(in srgb,var(--orange) 78%,var(--wire));stroke-width:2.7}.wire.exec-done{stroke:var(--teal)}.wire.exec-error{stroke:var(--red);stroke-width:3}.wire-pulse{fill:var(--orange);stroke:var(--surface);stroke-width:2.5;vector-effect:non-scaling-stroke;pointer-events:none}.flow-node.exec-active{border-color:var(--blue)!important;box-shadow:0 0 0 3px color-mix(in srgb,var(--blue) 34%,transparent),0 0 28px 8px color-mix(in srgb,var(--blue) 34%,transparent),var(--node-shadow);animation:node-active-glow 1.35s ease-in-out infinite}.flow-node.exec-waiting{border-color:var(--orange)!important;box-shadow:0 0 0 2px color-mix(in srgb,var(--orange) 28%,transparent),var(--node-shadow)}.flow-node.exec-done{border-color:var(--teal)!important;box-shadow:0 0 0 2px color-mix(in srgb,var(--teal) 48%,transparent),var(--node-shadow)}.flow-node.exec-error{border-color:var(--red)!important;box-shadow:0 0 0 3px color-mix(in srgb,var(--red) 28%,transparent),0 0 22px color-mix(in srgb,var(--red) 25%,transparent),var(--node-shadow)!important}@keyframes node-active-glow{50%{box-shadow:0 0 0 4px color-mix(in srgb,var(--blue) 42%,transparent),0 0 38px 12px color-mix(in srgb,var(--blue) 40%,transparent),var(--node-shadow)}}
 @media(prefers-reduced-motion:reduce){.flow-node.exec-active{animation:none}.wire-pulse animate{display:none}}
 .wire-group{pointer-events:none}.wire-group.editable{pointer-events:visiblePainted}.wire-group.editable .wire-hit{pointer-events:stroke}.wire-group:not(.editable) .wire-hit{pointer-events:none}
+
+/* Workspace frames v36: compact live bounds and a larger drag handle. */
+.workspace-frame-head{left:14px;right:14px;top:12px;height:64px;border-bottom-width:2px}
+.workspace-frame-kind{font-size:14px;letter-spacing:1.6px}
+.workspace-frame-number{font-size:18px;padding:7px 18px}
+.workspace-frame-actions{gap:9px}
+.workspace-frame-actions button{width:48px;height:46px;border-radius:12px;font-size:22px}
+.workspace-frame-title{left:22px;top:86px;max-width:calc(100% - 44px);font-size:15px}
+
+/* Connection routing preview and universal ontology anchors. */
+.wire.preview{stroke:var(--orange);stroke-width:4;stroke-dasharray:11 7;filter:drop-shadow(0 0 5px color-mix(in srgb,var(--orange) 72%,transparent));animation:connection-route-dash .6s linear infinite}
+.wire.preview.routing-valid{stroke:var(--teal);filter:drop-shadow(0 0 7px color-mix(in srgb,var(--teal) 78%,transparent))}
+@keyframes connection-route-dash{to{stroke-dashoffset:-18}}
+.port.connecting,.port.connection-source{box-shadow:0 0 0 6px color-mix(in srgb,var(--orange) 27%,transparent);border-color:var(--orange)}
+.port.connection-compatible{box-shadow:0 0 0 4px color-mix(in srgb,var(--teal) 18%,transparent)}
+.port.connection-target{background:var(--teal);border-color:#fff;box-shadow:0 0 0 7px color-mix(in srgb,var(--teal) 34%,transparent),0 0 14px color-mix(in srgb,var(--teal) 72%,transparent);transform:scale(1.2)}
+.flow-node.connection-candidate{outline:3px solid color-mix(in srgb,var(--teal) 38%,transparent);outline-offset:5px}
+.ontology-anchor.port{top:50%;margin-top:-6px;border-color:var(--purple)}
+.ontology-anchor.port[data-side="left"]{left:-7px;right:auto}
+.ontology-anchor.port[data-side="right"]{left:auto;right:-7px}
+
+/* Relation name in the middle; cardinality masked on the wire near the source type. */
+.wire-relation-badge,.wire-cardinality-badge{pointer-events:all;cursor:pointer}
+.wire-relation-bg,.wire-cardinality-mask{fill:color-mix(in srgb,var(--surface) 96%,var(--purple-soft));stroke:color-mix(in srgb,var(--purple) 62%,var(--line));stroke-width:1.2;vector-effect:non-scaling-stroke}
+.wire-relation-name,.wire-cardinality-text{font:800 10px Inter,"Segoe UI",Arial,sans-serif;dominant-baseline:auto}
+.wire-relation-name{fill:var(--text)}
+.wire-cardinality-text{fill:var(--purple)}
+.wire-relation-badge:hover .wire-relation-bg,.wire-cardinality-badge:hover .wire-cardinality-mask{stroke:var(--orange);stroke-width:2}
+.wire-cardinality-badge:hover .wire-cardinality-text{fill:var(--orange)}
+.wire-group.sync-modified .wire-relation-bg,.wire-group.sync-modified .wire-cardinality-mask{stroke:var(--orange);fill:color-mix(in srgb,var(--orange) 10%,var(--surface))}
+.wire-group.sync-modified .wire-cardinality-text{fill:var(--orange)}
 .nodes{pointer-events:none}.nodes>.flow-node{pointer-events:auto}
