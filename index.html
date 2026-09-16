@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>PowerPlatform · Публичный просмотр процесса</title>
-  <link rel="stylesheet" href="./node-editor.css?v=34">
+  <link rel="stylesheet" href="./node-editor.css?v=36">
 </head>
 <body data-theme="day" data-published="true">
   <header class="topbar">
@@ -98,7 +98,7 @@
         <button id="sync-ontology" class="sync-ontology" type="button" hidden><span>↻</span> Синхронизировать</button>
       </div>
       <div id="empty-canvas" class="empty-canvas">
-        <div class="empty-symbol"><i></i><i></i><i></i></div>
+        <div class="empty-symbol"><img src="./powerplatform-logotype.png" alt="PowerPlatform"></div>
         <strong>Рабочее поле готово</strong>
       </div>
       <div id="stage" class="stage">
@@ -129,9 +129,8 @@
       </section>
       <section id="codex-panel" class="inspector-view codex-panel" hidden>
         <div class="codex-connect-row"><span id="codex-status"><i></i> Не подключён</span><button id="codex-connect" type="button">Подключить</button></div>
-        <p id="codex-scope" class="codex-scope">Контекст Codex: вся рабочая модель. Изменения сначала показываются как локальный план.</p>
         <div id="codex-login" class="codex-login" hidden></div>
-        <div id="codex-messages" class="codex-messages"><article class="codex-message assistant">Можно спросить о схеме или написать, что изменить, и нажать «На схему».</article></div>
+        <div id="codex-messages" class="codex-messages"></div>
         <form id="codex-form" class="codex-form"><textarea id="codex-input" rows="3" placeholder="Например: добавь AI-Помощник и соедини с выводом в консоль" disabled></textarea><div><button id="codex-new-thread" type="button" title="Начать новый чат" disabled>Новый чат</button><button id="codex-plan" class="codex-plan-button" type="button" title="Подготовить безопасный план изменений" disabled>На схему</button><button id="codex-send" class="run-button" type="submit" disabled>Отправить</button></div></form>
       </section>
     </aside>

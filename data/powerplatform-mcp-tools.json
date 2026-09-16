@@ -3,7 +3,7 @@
   "server": "PowerPlatform Local Workspace",
   "transport": "stdio",
   "displayRevision": "stdio · schema v1",
-  "toolCount": 39,
+  "toolCount": 51,
   "safety": {
     "default": "read-only or local staging",
     "remoteMutation": "execute=false by default; exact confirmation required",
@@ -108,6 +108,150 @@
         {
           "name": "artifact",
           "description": "Карточка сохранённого JSON-файла в workspace."
+        }
+      ]
+    },
+    {
+      "name": "workspace_graph_get",
+      "title": "Получить рабочую модель",
+      "purpose": "Получить последнюю сохранённую рабочую модель целиком или одну рамку.",
+      "group": "Локальный workspace",
+      "mode": "read",
+      "access": "read",
+      "accessLabel": "ЧТЕНИЕ",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "workspace_path",
+          "type": "string",
+          "required": false,
+          "description": "Путь к файлу или папке внутри общего локального workspace.",
+          "default": ""
+        },
+        {
+          "name": "scope",
+          "type": "string",
+          "required": false,
+          "description": "Область графа: вся рабочая модель или выбранная рамка.",
+          "default": "workspace"
+        },
+        {
+          "name": "zone_id",
+          "type": "string",
+          "required": false,
+          "description": "ID рамки процесса или онтологии внутри рабочей модели.",
+          "default": ""
+        }
+      ],
+      "outputs": [
+        {
+          "name": "graph",
+          "description": "Полная рабочая модель или выбранная рамка."
+        },
+        {
+          "name": "path",
+          "description": "Путь к фактически прочитанному JSON."
+        },
+        {
+          "name": "summary",
+          "description": "Количество рамок, нодов и связей."
+        }
+      ]
+    },
+    {
+      "name": "workspace_graph_patch",
+      "title": "Изменить рабочую модель",
+      "purpose": "Атомарно применить локальные изменения графа и сохранить новый JSON, не меняя PowerPlatform.",
+      "group": "Локальный workspace",
+      "mode": "write",
+      "access": "local-write",
+      "accessLabel": "ЛОКАЛЬНО",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "actions",
+          "type": "array<object>",
+          "required": true,
+          "description": "Упорядоченный список атомарных локальных изменений графа."
+        },
+        {
+          "name": "workspace_path",
+          "type": "string",
+          "required": false,
+          "description": "Путь к файлу или папке внутри общего локального workspace.",
+          "default": ""
+        },
+        {
+          "name": "scope",
+          "type": "string",
+          "required": false,
+          "description": "Область графа: вся рабочая модель или выбранная рамка.",
+          "default": "workspace"
+        },
+        {
+          "name": "zone_id",
+          "type": "string",
+          "required": false,
+          "description": "ID рамки процесса или онтологии внутри рабочей модели.",
+          "default": ""
+        }
+      ],
+      "outputs": [
+        {
+          "name": "status",
+          "description": "PATCHED после атомарного локального изменения."
+        },
+        {
+          "name": "artifact",
+          "description": "Новая версия JSON рабочей модели."
+        },
+        {
+          "name": "actionsApplied",
+          "description": "Количество применённых действий."
+        },
+        {
+          "name": "before",
+          "description": "Состав модели до изменения."
+        },
+        {
+          "name": "after",
+          "description": "Состав модели после изменения."
+        }
+      ]
+    },
+    {
+      "name": "workspace_audit_list",
+      "title": "Журнал операций workspace",
+      "purpose": "Прочитать последние записи локального журнала планов, backup, записи и read-back.",
+      "group": "Локальный workspace",
+      "mode": "read",
+      "access": "read",
+      "accessLabel": "ЧТЕНИЕ",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "limit",
+          "type": "integer",
+          "required": false,
+          "description": "Максимальное количество возвращаемых элементов.",
+          "default": 100
+        },
+        {
+          "name": "action",
+          "type": "string",
+          "required": false,
+          "description": "Необязательный фильтр по имени действия в локальном журнале.",
+          "default": ""
+        }
+      ],
+      "outputs": [
+        {
+          "name": "entries",
+          "description": "Последние записи локального журнала в обратном хронологическом порядке."
+        },
+        {
+          "name": "count",
+          "description": "Количество возвращённых записей."
         }
       ]
     },
@@ -221,6 +365,48 @@
         {
           "name": "connectionNamesOver32",
           "description": "Связи с недопустимо длинными именами."
+        }
+      ]
+    },
+    {
+      "name": "ontology_diff",
+      "title": "Сравнить онтологию",
+      "purpose": "Сравнить типы, связи и кардинальности черновика с текущей онтологией без записи.",
+      "group": "Фабрика онтологий",
+      "mode": "read",
+      "access": "read",
+      "accessLabel": "ЧТЕНИЕ",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "ontology_id",
+          "type": "string",
+          "required": true,
+          "description": "ID онтологии в Фабрике онтологий."
+        },
+        {
+          "name": "model",
+          "type": "object",
+          "required": false,
+          "description": "Inline-модель онтологии с types и connections.",
+          "default": null
+        },
+        {
+          "name": "workspace_path",
+          "type": "string",
+          "required": false,
+          "description": "Путь к файлу или папке внутри общего локального workspace.",
+          "default": ""
+        }
+      ],
+      "outputs": [
+        {
+          "name": "ontologyId",
+          "description": "ID сравниваемой онтологии."
+        },
+        {
+          "name": "diff",
+          "description": "Добавленные, удалённые и изменённые типы и связи."
         }
       ]
     },
@@ -340,8 +526,8 @@
     },
     {
       "name": "ontology_sync",
-      "title": "Синхронизировать диаграмму онтологии",
-      "purpose": "Передать изменённый YModel конкретной онтологии; сначала вернуть план, затем сделать backup, обновление и read-back.",
+      "title": "Синхронизировать онтологию",
+      "purpose": "Синхронизировать отредактированный YModel с онтологией; сначала план, затем backup и read-back.",
       "group": "Фабрика онтологий",
       "mode": "write",
       "access": "remote-write",
@@ -352,26 +538,26 @@
           "name": "ontology_id",
           "type": "string",
           "required": true,
-          "description": "ID онтологии PowerPlatform."
+          "description": "ID онтологии в Фабрике онтологий."
         },
         {
           "name": "model",
           "type": "object",
           "required": true,
-          "description": "YModel с types[] и connections[]."
+          "description": "Inline-модель онтологии с types и connections."
         },
         {
           "name": "execute",
           "type": "boolean",
           "required": false,
-          "description": "При false создаётся только безопасный план и локальный staged DTO.",
+          "description": "При false возвращается безопасный план без изменения платформы.",
           "default": false
         },
         {
           "name": "confirmation",
           "type": "string",
           "required": false,
-          "description": "Точная фраза подтверждения UPDATE <ontology_id>.",
+          "description": "Точная фраза подтверждения, полученная на этапе PLAN.",
           "default": ""
         }
       ],
@@ -381,12 +567,28 @@
           "description": "PLAN, EXECUTED или EXECUTED_READBACK_MISMATCH."
         },
         {
+          "name": "executed",
+          "description": "Была ли выполнена запись."
+        },
+        {
+          "name": "confirmationRequired",
+          "description": "Точная фраза подтверждения."
+        },
+        {
+          "name": "diff",
+          "description": "Семантические изменения типов и связей."
+        },
+        {
           "name": "staged",
-          "description": "Локально сохранённый полный DTO онтологии."
+          "description": "Локально подготовленный DTO."
+        },
+        {
+          "name": "backups",
+          "description": "Локальные резервные копии."
         },
         {
           "name": "verification",
-          "description": "Результат независимого read-back после записи."
+          "description": "Результат независимого чтения после записи."
         }
       ]
     },
@@ -554,6 +756,183 @@
         {
           "name": "nodes",
           "description": "Фактическая схема нодов и связей модели."
+        }
+      ]
+    },
+    {
+      "name": "pas_validate_schema",
+      "title": "Проверить схему PAS",
+      "purpose": "Проверить корни, ветвления, циклы, достижимость, порты и ссылки схемы PAS.",
+      "group": "Студия процессов",
+      "mode": "read",
+      "access": "read",
+      "accessLabel": "ЧТЕНИЕ",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "model_id",
+          "type": "string",
+          "required": false,
+          "description": "ID модели процесса PAS.",
+          "default": ""
+        },
+        {
+          "name": "workspace_path",
+          "type": "string",
+          "required": false,
+          "description": "Путь к файлу или папке внутри общего локального workspace.",
+          "default": ""
+        },
+        {
+          "name": "schema",
+          "type": "array<object>",
+          "required": false,
+          "description": "Inline-массив нодов и связей схемы PAS.",
+          "default": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "status",
+          "description": "PASS, WARN или FAIL."
+        },
+        {
+          "name": "nodes",
+          "description": "Количество нодов."
+        },
+        {
+          "name": "edges",
+          "description": "Количество связей."
+        },
+        {
+          "name": "splits",
+          "description": "Узлы ветвления."
+        },
+        {
+          "name": "joins",
+          "description": "Узлы объединения."
+        },
+        {
+          "name": "errors",
+          "description": "Структурные ошибки."
+        },
+        {
+          "name": "warnings",
+          "description": "Структурные предупреждения."
+        }
+      ]
+    },
+    {
+      "name": "pas_schema_diff",
+      "title": "Сравнить схему PAS",
+      "purpose": "Семантически сравнить предложенную схему с сохранённой моделью PAS без записи.",
+      "group": "Студия процессов",
+      "mode": "read",
+      "access": "read",
+      "accessLabel": "ЧТЕНИЕ",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "model_id",
+          "type": "string",
+          "required": true,
+          "description": "ID модели процесса PAS."
+        },
+        {
+          "name": "schema",
+          "type": "array<object>",
+          "required": false,
+          "description": "Inline-массив нодов и связей схемы PAS.",
+          "default": null
+        },
+        {
+          "name": "workspace_path",
+          "type": "string",
+          "required": false,
+          "description": "Путь к файлу или папке внутри общего локального workspace.",
+          "default": ""
+        }
+      ],
+      "outputs": [
+        {
+          "name": "modelId",
+          "description": "ID модели PAS."
+        },
+        {
+          "name": "diff",
+          "description": "Добавленные, удалённые и изменённые ноды и связи."
+        },
+        {
+          "name": "validation",
+          "description": "Проверка предложенной схемы."
+        }
+      ]
+    },
+    {
+      "name": "pas_sync_schema",
+      "title": "Синхронизировать схему PAS",
+      "purpose": "Синхронизировать inline-схему PAS через diff, validation, backup, PUT и независимый read-back.",
+      "group": "Студия процессов",
+      "mode": "write",
+      "access": "remote-write",
+      "accessLabel": "ЗАПИСЬ",
+      "confirmation": "SAVE SCHEMA <model_id>",
+      "inputs": [
+        {
+          "name": "model_id",
+          "type": "string",
+          "required": true,
+          "description": "ID модели процесса PAS."
+        },
+        {
+          "name": "schema",
+          "type": "array<object>",
+          "required": true,
+          "description": "Inline-массив нодов и связей схемы PAS."
+        },
+        {
+          "name": "execute",
+          "type": "boolean",
+          "required": false,
+          "description": "При false возвращается безопасный план без изменения платформы.",
+          "default": false
+        },
+        {
+          "name": "confirmation",
+          "type": "string",
+          "required": false,
+          "description": "Точная фраза подтверждения, полученная на этапе PLAN.",
+          "default": ""
+        }
+      ],
+      "outputs": [
+        {
+          "name": "status",
+          "description": "PLAN, REJECTED, EXECUTED или EXECUTED_READBACK_MISMATCH."
+        },
+        {
+          "name": "executed",
+          "description": "Была ли выполнена запись."
+        },
+        {
+          "name": "confirmationRequired",
+          "description": "Точная фраза подтверждения."
+        },
+        {
+          "name": "diff",
+          "description": "Семантические изменения схемы."
+        },
+        {
+          "name": "validation",
+          "description": "Проверка предложенной схемы."
+        },
+        {
+          "name": "backup",
+          "description": "Локальная резервная копия."
+        },
+        {
+          "name": "verification",
+          "description": "Результат независимого чтения схемы после записи."
         }
       ]
     },
@@ -901,6 +1280,38 @@
       ]
     },
     {
+      "name": "pas_get_node_definition",
+      "title": "Карточка нода PAS",
+      "purpose": "Получить одну точную карточку функции-нода PAS по её ID.",
+      "group": "Студия процессов",
+      "mode": "read",
+      "access": "read",
+      "accessLabel": "ЧТЕНИЕ",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "function_id",
+          "type": "string",
+          "required": true,
+          "description": "Точный ID функции-нода из каталога PAS."
+        }
+      ],
+      "outputs": [
+        {
+          "name": "definition",
+          "description": "Точная карточка функции-нода PAS с портами и метаданными."
+        },
+        {
+          "name": "functionId",
+          "description": "Подтверждённый ID функции."
+        },
+        {
+          "name": "exactMatches",
+          "description": "Количество точных совпадений ID."
+        }
+      ]
+    },
+    {
       "name": "pas_upload_file",
       "title": "Загрузить файл в PowerStorage",
       "purpose": "Загрузить файл из общего workspace в PowerStorage/FileContainer; сначала возвращается безопасный план.",
@@ -1124,6 +1535,96 @@
       ]
     },
     {
+      "name": "pas_execution_trace",
+      "title": "Трасса исполнения",
+      "purpose": "Получить нормализованные read-only события нодов исполнения после заданного номера.",
+      "group": "Студия процессов",
+      "mode": "read",
+      "access": "read",
+      "accessLabel": "ЧТЕНИЕ",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "execution_id",
+          "type": "string",
+          "required": true,
+          "description": "ID исполнения процесса."
+        },
+        {
+          "name": "after_seq",
+          "type": "integer",
+          "required": false,
+          "description": "Вернуть события трассы строго после этого номера.",
+          "default": 0
+        }
+      ],
+      "outputs": [
+        {
+          "name": "executionId",
+          "description": "ID отслеживаемого исполнения."
+        },
+        {
+          "name": "events",
+          "description": "Нормализованные события нодов после after_seq."
+        },
+        {
+          "name": "lastSeq",
+          "description": "Последний номер события."
+        },
+        {
+          "name": "connected",
+          "description": "Состояние WebSocket-наблюдателя."
+        },
+        {
+          "name": "nodeTelemetry",
+          "description": "Получена ли телеметрия уровня нодов."
+        }
+      ]
+    },
+    {
+      "name": "pas_execution_diagnose",
+      "title": "Диагностика исполнения",
+      "purpose": "Сопоставить схему, журнал и трассу исполнения и объяснить непройденные ветки.",
+      "group": "Студия процессов",
+      "mode": "read",
+      "access": "read",
+      "accessLabel": "ЧТЕНИЕ",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "execution_id",
+          "type": "string",
+          "required": true,
+          "description": "ID исполнения процесса."
+        },
+        {
+          "name": "after_seq",
+          "type": "integer",
+          "required": false,
+          "description": "Вернуть события трассы строго после этого номера.",
+          "default": 0
+        }
+      ],
+      "outputs": [
+        {
+          "name": "status",
+          "description": "DIAGNOSED или LIMITED."
+        },
+        {
+          "name": "modelId",
+          "description": "ID модели исполнения, если он доступен."
+        },
+        {
+          "name": "diagnosis",
+          "description": "Посещённые ноды, непройденные ветви и выводы с явными ограничениями телеметрии."
+        },
+        {
+          "name": "details",
+          "description": "Карточка, результат и журнал исполнения."
+        }
+      ]
+    },
+    {
       "name": "pas_run",
       "title": "Запустить модель",
       "purpose": "Подготовить или запустить модель. Параметры задаются по ID входных нодов; запуск требует точного подтверждения. В debug_options.breakpoints допустимы только объекты PAS DebugBreakpoint, не строки с ID нодов.",
@@ -1342,6 +1843,95 @@
         {
           "name": "exporters",
           "description": "Доступность проверенных экспортёров."
+        }
+      ]
+    },
+    {
+      "name": "cadlib_search_classes",
+      "title": "Поиск классов CADLib",
+      "purpose": "Найти категории и классы в локальной read-only схеме CADLib.",
+      "group": "CADLib",
+      "mode": "read",
+      "access": "read",
+      "accessLabel": "ЧТЕНИЕ",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "query",
+          "type": "string",
+          "required": false,
+          "description": "Строка поиска; пустая строка возвращает полный доступный список.",
+          "default": ""
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "required": false,
+          "description": "Максимальное количество возвращаемых элементов.",
+          "default": 50
+        },
+        {
+          "name": "include_empty",
+          "type": "boolean",
+          "required": false,
+          "description": "Включать категории или классы без опубликованных атрибутов.",
+          "default": false
+        }
+      ],
+      "outputs": [
+        {
+          "name": "items",
+          "description": "Найденные категории и классы CADLib."
+        },
+        {
+          "name": "total",
+          "description": "Количество совпадений до ограничения."
+        },
+        {
+          "name": "truncated",
+          "description": "Признак сокращённой выдачи."
+        }
+      ]
+    },
+    {
+      "name": "cadlib_get_class_schema",
+      "title": "Схема класса CADLib",
+      "purpose": "Получить атрибуты и классификатор одного класса CADLib без чтения объектов.",
+      "group": "CADLib",
+      "mode": "read",
+      "access": "read",
+      "accessLabel": "ЧТЕНИЕ",
+      "confirmation": null,
+      "inputs": [
+        {
+          "name": "category_id",
+          "type": "string",
+          "required": true,
+          "description": "ID категории локальной схемы CADLib."
+        },
+        {
+          "name": "class_key",
+          "type": "string",
+          "required": true,
+          "description": "Ключ класса внутри выбранной категории CADLib."
+        }
+      ],
+      "outputs": [
+        {
+          "name": "category",
+          "description": "Категория CADLib."
+        },
+        {
+          "name": "classifier",
+          "description": "Метаданные классификатора."
+        },
+        {
+          "name": "class",
+          "description": "Выбранный класс вместе с опубликованными атрибутами."
+        },
+        {
+          "name": "source",
+          "description": "Локальный read-only источник схемы."
         }
       ]
     },
