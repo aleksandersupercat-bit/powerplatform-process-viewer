@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>PowerPlatform · Публичный просмотр процесса</title>
-  <link rel="stylesheet" href="./node-editor.css?v=32">
+  <link rel="stylesheet" href="./node-editor.css?v=33">
 </head>
 <body data-theme="day" data-published="true">
   <header class="topbar">
@@ -50,6 +50,7 @@
         <button class="source-tab" data-source="cadlib" role="tab">CADLib</button>
         <button class="source-tab ontology-tab" data-source="ontology" role="tab">Онтология</button>
       </div>
+      <div id="library-scope" class="workspace-scope" aria-live="polite"></div>
 
       <section id="process-library" class="source-pane active">
         <label class="search-box"><span>⌕</span><input id="node-search" placeholder="Найти нод…" autocomplete="off"></label>
@@ -101,8 +102,6 @@
       <div id="empty-canvas" class="empty-canvas">
         <div class="empty-symbol"><i></i><i></i><i></i></div>
         <strong>Рабочее поле готово</strong>
-        <p>Добавьте нод платформы или класс из CADLib. Соединяйте порты перетаскиванием.</p>
-        <div><button data-quick="process">＋ Добавить нод</button><button data-quick="cadlib">＋ Открыть CADLib</button></div>
       </div>
       <div id="stage" class="stage">
         <div id="workspace-frames" class="workspace-frames"></div>
@@ -113,7 +112,7 @@
         <div id="nodes" class="nodes"></div>
       </div>
       <div id="selection-box" class="selection-box" hidden></div>
-      <div class="canvas-help"><span>ЛКМ по фону — выделение рамкой</span><span>Delete — удалить выбранное</span><span>Колесо — масштаб</span><span>Средняя кнопка — перемещение</span><span>Провод — потянуть от порта</span><span>Двойной клик по группе — открыть</span></div>
+      <div class="canvas-help"><span>ЛКМ по фону — вся рабочая модель</span><span>Протяжка по фону — выделение</span><span>Delete — удалить выбранное</span><span>Колесо — масштаб</span><span>Средняя кнопка — перемещение</span><span>Провод — потянуть от порта</span><span>Двойной клик по группе — открыть</span></div>
       <div id="minimap" class="minimap"><div id="minimap-nodes"></div><div id="minimap-view"></div></div>
     </section>
 
@@ -132,7 +131,7 @@
       </section>
       <section id="codex-panel" class="inspector-view codex-panel" hidden>
         <div class="codex-connect-row"><span id="codex-status"><i></i> Не подключён</span><button id="codex-connect" type="button">Подключить</button></div>
-        <p class="codex-scope">Codex работает в этом проекте и видит только проектный MCP <code>powerplatform_local</code>. Изменения схемы сначала показываются как план и применяются только локально.</p>
+        <p id="codex-scope" class="codex-scope">Контекст Codex: вся рабочая модель. Изменения сначала показываются как локальный план.</p>
         <div id="codex-login" class="codex-login" hidden></div>
         <div id="codex-messages" class="codex-messages"><article class="codex-message assistant">Можно спросить о схеме или написать, что изменить, и нажать «На схему».</article></div>
         <form id="codex-form" class="codex-form"><textarea id="codex-input" rows="3" placeholder="Например: добавь AI-Помощник и соедини с выводом в консоль" disabled></textarea><div><button id="codex-new-thread" type="button" title="Начать новый чат" disabled>Новый чат</button><button id="codex-plan" class="codex-plan-button" type="button" title="Подготовить безопасный план изменений" disabled>На схему</button><button id="codex-send" class="run-button" type="submit" disabled>Отправить</button></div></form>
@@ -237,6 +236,6 @@
   </dialog>
 
   <script src="./published-bootstrap.js?v=1"></script>
-  <script src="./node-editor.js?v=37"></script>
+  <script src="./node-editor.js?v=38"></script>
 </body>
 </html>

@@ -84,6 +84,7 @@ dialog{width:min(630px,calc(100vw - 40px));max-height:78vh;border:1px solid var(
 :root{--left:330px;--right:410px}
 .library-panel .panel-title{height:64px;padding-left:17px}.library-panel .panel-title small{font-size:9px}.library-panel .panel-title strong{font-size:16px}
 .source-tabs{height:44px}.source-tab{font-size:13px}.source-pane{height:calc(100% - 108px);padding:12px}.search-box{height:40px}.search-box>span{font-size:17px}.search-box input{font-size:14px}
+.workspace-scope{height:34px;padding:0 13px;display:flex;align-items:center;gap:7px;border-bottom:1px solid var(--line);background:var(--surface-2);color:var(--muted);font-size:10px;white-space:nowrap;overflow:hidden}.workspace-scope i{width:8px;height:8px;flex:0 0 auto;border-radius:50%;background:var(--orange);box-shadow:0 0 0 3px color-mix(in srgb,var(--orange) 12%,transparent)}.workspace-scope.frame i{background:var(--blue);box-shadow:0 0 0 3px color-mix(in srgb,var(--blue) 12%,transparent)}.workspace-scope span{overflow:hidden;text-overflow:ellipsis}.workspace-scope b{color:var(--text)}.library-panel .source-pane{height:calc(100% - 142px)}
 .library-caption{height:39px;font-size:10px}.library-caption b{font-size:11px;padding:2px 6px}
 .node-group-button{min-height:50px;grid-template-columns:17px 1fr auto;padding:9px 11px}.node-group-button>span{font-size:18px}.node-group-button strong{font-size:14px;line-height:1.25}.node-group-button b{font-size:11px;padding:3px 6px}
 .catalog-item{min-height:58px;padding:9px 10px;grid-template-columns:34px 1fr auto;gap:9px}.catalog-icon{width:33px;height:33px;font-size:14px}
@@ -197,7 +198,8 @@ body.phone-mode .panel-title{height:76px}
 body.phone-mode .panel-title strong{font-size:18px}
 body.phone-mode .source-tabs{height:52px}
 body.phone-mode .source-tab{font-size:15px;min-height:42px}
-body.phone-mode .source-pane{height:calc(100% - 128px)}
+body.phone-mode .workspace-scope{height:40px;font-size:12px}
+body.phone-mode .source-pane{height:calc(100% - 168px)}
 body.phone-mode .catalog-item{min-height:68px}
 body.phone-mode .catalog-item strong,body.phone-mode .catalog-item.search-result strong{font-size:15px}
 body.phone-mode .catalog-item small{font-size:12px}
@@ -270,14 +272,16 @@ body.published-mode #run-graph,body.published-mode #debug-graph,body.published-m
 .ontology-anchor.port[data-side="left"]{left:-7px;right:auto}
 .ontology-anchor.port[data-side="right"]{left:auto;right:-7px}
 
-/* Relation name in the middle; one independent 1/n mask on the wire near each type. */
+/* Relation callout sits above the wire; arrow on the wire shows type-to-type direction. */
 .wire-relation-badge,.wire-cardinality-badge{pointer-events:all;cursor:pointer}
 .wire-relation-bg,.wire-cardinality-mask{fill:color-mix(in srgb,var(--surface) 96%,var(--purple-soft));stroke:color-mix(in srgb,var(--purple) 62%,var(--line));stroke-width:1.2;vector-effect:non-scaling-stroke}
-.wire-relation-name,.wire-cardinality-text{font:800 10px Inter,"Segoe UI",Arial,sans-serif;dominant-baseline:auto}
+.wire-relation-name,.wire-cardinality-text,.wire-relation-direction-text{font:800 10px Inter,"Segoe UI",Arial,sans-serif;dominant-baseline:auto}
 .wire-relation-name{fill:var(--text)}
 .wire-cardinality-text{fill:var(--purple);font-size:11px}
+.wire-relation-stem{stroke:color-mix(in srgb,var(--purple) 62%,var(--line));stroke-width:1.2;stroke-dasharray:2 2;vector-effect:non-scaling-stroke;pointer-events:none}.wire-relation-arrow{fill:var(--purple);stroke:var(--surface);stroke-width:2;vector-effect:non-scaling-stroke;pointer-events:none}.wire-relation-direction-bg{fill:var(--purple)}.wire-relation-direction-text{fill:#fff;font-size:13px}
 .wire-relation-badge:hover .wire-relation-bg,.wire-cardinality-badge:hover .wire-cardinality-mask{stroke:var(--orange);stroke-width:2}
 .wire-cardinality-badge:hover .wire-cardinality-text{fill:var(--orange)}
 .wire-group.sync-modified .wire-relation-bg,.wire-group.sync-modified .wire-cardinality-mask{stroke:var(--orange);fill:color-mix(in srgb,var(--orange) 10%,var(--surface))}
-.wire-group.sync-modified .wire-cardinality-text{fill:var(--orange)}
+.wire-group.sync-modified .wire-cardinality-text{fill:var(--orange)}.wire-group.sync-modified .wire-relation-stem{stroke:var(--orange)}.wire-group.sync-modified .wire-relation-arrow,.wire-group.sync-modified .wire-relation-direction-bg{fill:var(--orange)}
+.codex-plan-scope{display:inline-flex;margin:0 0 7px;padding:3px 7px;border-radius:8px;background:var(--blue-soft);color:var(--blue);font-size:9px;font-weight:800}
 .nodes{pointer-events:none}.nodes>.flow-node{pointer-events:auto}
