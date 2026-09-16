@@ -270,12 +270,12 @@ body.published-mode #run-graph,body.published-mode #debug-graph,body.published-m
 .ontology-anchor.port[data-side="left"]{left:-7px;right:auto}
 .ontology-anchor.port[data-side="right"]{left:auto;right:-7px}
 
-/* Relation name in the middle; cardinality masked on the wire near the source type. */
+/* Relation name in the middle; one independent 1/n mask on the wire near each type. */
 .wire-relation-badge,.wire-cardinality-badge{pointer-events:all;cursor:pointer}
 .wire-relation-bg,.wire-cardinality-mask{fill:color-mix(in srgb,var(--surface) 96%,var(--purple-soft));stroke:color-mix(in srgb,var(--purple) 62%,var(--line));stroke-width:1.2;vector-effect:non-scaling-stroke}
 .wire-relation-name,.wire-cardinality-text{font:800 10px Inter,"Segoe UI",Arial,sans-serif;dominant-baseline:auto}
 .wire-relation-name{fill:var(--text)}
-.wire-cardinality-text{fill:var(--purple)}
+.wire-cardinality-text{fill:var(--purple);font-size:11px}
 .wire-relation-badge:hover .wire-relation-bg,.wire-cardinality-badge:hover .wire-cardinality-mask{stroke:var(--orange);stroke-width:2}
 .wire-cardinality-badge:hover .wire-cardinality-text{fill:var(--orange)}
 .wire-group.sync-modified .wire-relation-bg,.wire-group.sync-modified .wire-cardinality-mask{stroke:var(--orange);fill:color-mix(in srgb,var(--orange) 10%,var(--surface))}
